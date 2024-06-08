@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        .form-box {
+            width: 300px;
+            margin: 100px auto;
+            padding: 30px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .form-box input {
+            width: 90%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .form-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-box button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+        }
+        .toggle-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .toggle-container button {
+            width: 30%;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .link {
+            display: block;
+            margin-top: 10px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h1>Login</h1>
+        <div class="toggle-container">
+            <button type="button" id="userToggleBtn">User Login</button>
+            <button type="button" id="adminToggleBtn">Admin Login</button>
+        </div>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form id="userForm" method="POST" action="{{ url_for('login') }}">
+            <label for="userId">User ID:</label>
+            <input type="text" id="userId" name="userId" required><br><br>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <button type="submit" id="userBtn">Sign In</button>
+        </form>
+        <form id="adminForm" method="POST" action="{{ url_for('login') }}" style="display: none;">
+            <label for="adminId">Admin ID:</label>
+            <input type="text" id="adminId" name="adminId" required><br><br>
+            
+            <label for="adminPassword">Admin Password:</label>
+            <input type="password" id="adminPassword" name="adminPassword" required><br><br>
+
+            <button type="submit" id="adminBtn">Sign In</button>
+        </form>
+        <form id="signInForm" method="POST" action="{{ url_for('login') }}" style="display: none;">
+            <label for="signInId">ID:</label>
+            <input type="text" id="signInId" name="signInId" required><br><br>
+            
+            <label for="signInPassword">Password:</label>
+            <input type="password" id="signInPassword" name="signInPassword" required><br><br>
+
+            <button type="submit" id="signInBtn">Sign In</button>
+        </form>
+        <a href="{{ url_for('forgot_password') }}" class="link">Forgot Password?</a>
+        <a href="{{ url_for('create_account') }}" class="link">Create New Account</a>
+    </div>
+
+    <script>
+        const userToggleBtn = document.getElementById("userToggleBtn");
+        const adminToggleBtn = document.getElementById("adminToggleBtn");
+        const signInToggleBtn = document.getElementById("signInToggleBtn");
+        const userForm = document.getElementById("userForm");
+        const adminForm = document.getElementById("adminForm");
+        const signInForm = document.getElementById("signInForm");
+
+        userToggleBtn.addEventListener("click", function() {
+            userForm.style.display = "block";
+            adminForm.style.display = "none";
+            signInForm.style.display = "none";
+        });
+
+        adminToggleBtn.addEventListener("click", function() {
+            userForm.style.display = "none";
+            adminForm.style.display = "block";
+            signInForm.style.display = "none";
+        });
+
+        signInToggleBtn.addEventListener("click", function() {
+            userForm.style.display = "none";
+            adminForm.style.display = "none";
+            signInForm.style.display = "block";
+        });
+    </script>
+</body>
+</html>
