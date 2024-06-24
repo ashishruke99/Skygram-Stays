@@ -1,5 +1,6 @@
-Updates to keyboard shortcuts … On Thursday 1 August 2024, Drive keyboard shortcuts will be updated to give you first-letter navigation.Learn more
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+  <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,45 +26,38 @@ Updates to keyboard shortcuts … On Thursday 1 August 2024, Drive keyboard shor
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
     
+
     <!-- Custom Styles -->
     <style>
-      /* Primary color (dark green) */
       .primary-color {
         color: #098566;
       }
 
-      /* Secondary color (red) */
       .secondary-color {
         color: #FF6347;
       }
 
-      /* Background color (white) */
       .bg-white {
         background-color: #fff;
       }
 
-      /* Text color (white) */
       .text-black {
         color: #000;
       }
 
-      /* Update primary background */
       .bg-primary {
         background-color: #02521d !important;
       }
 
-      /* Update primary text */
       .text-primary {
         color: #02521d !important;
       }
 
-      /* Update button background color */
       .btn-primary {
         background-color: #09ac3f !important;
         border-color: #02521d !important;
       }
 
-      /* Responsive adjustments */
       @media (max-width: 768px) {
         .container-xxl {
           padding: 15px;
@@ -106,6 +100,34 @@ Updates to keyboard shortcuts … On Thursday 1 August 2024, Drive keyboard shor
           transform: scale(1.1);
         }
       }
+
+      .social-links {
+        display: flex;
+        justify-content: left; 
+        gap: 20px; 
+    }
+    
+    .social-link img {
+        width: 35px; 
+        height: 35px; 
+        transition: transform 0.2s; 
+    }
+    
+    .social-link img:hover {
+        transform: scale(1.1); 
+    }
+    
+    .zoom-hover {
+        display: inline-block;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .zoom-hover img {
+        border-radius: 50%;
+    }
+    
     </style>
 </head>
 
@@ -148,8 +170,9 @@ Updates to keyboard shortcuts … On Thursday 1 August 2024, Drive keyboard shor
                         </div>
                     </div>
                     <div class="social-links mt-3">
-                        <a href="#" target="_blank" class="zoom-hover"><img src="{{ url_for('static', filename='img/fb.png') }}" alt="Facebook" width="30" height="30"></a>
-                        <a href="#" target="_blank" style="margin-left: 10px;" class="zoom-hover"><img src="{{ url_for('static', filename='img/insta.jpeg') }}" alt="Instagram" width="30" height="30"></a>
+                        <a href="https://www.facebook.com/people/SkyGram-Stays/pfbid049m5DT24XV3kJpYKYh3nZT54vYGc39finw9QBgoRYM16B8H93is6HfH9284e5Qyel/" class="zoom-hover"><img src="{{ url_for('static', filename='img/facebook.jpg') }}" alt="Facebook" width="30" height="30"></a>
+                        <a href="https://www.instagram.com/skygram_stays/" target="_blank" style="margin-left: 10px;" class="zoom-hover"><img src="{{ url_for('static', filename='img/insta.jpg') }}" alt="Instagram" width="40" height="30"></a>
+                        <a href="https://api.whatsapp.com/send/?phone=%2B919226784221&text&type=phone_number&app_absent=0" target="_blank" class="zoom-hover"><img src="{{ url_for('static', filename='img/wap.png') }}" alt="Facebook" width="35" height="35"></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
@@ -204,3 +227,4 @@ Updates to keyboard shortcuts … On Thursday 1 August 2024, Drive keyboard shor
 </body>
 
 </html>
+{% endblock %}
