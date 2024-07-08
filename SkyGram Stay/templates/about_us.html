@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,24 +7,23 @@
     <title>About Us</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:wght@400;600;700&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Open Sans', sans-serif;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             margin: 0;
             padding: 0;
             position: relative;
-            overflow: auto;
         }
 
         .navbar {
-            position: fixed;
+            position: relative;
             top: 0;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
@@ -32,6 +33,7 @@
         .navbar-brand {
             font-size: 24px;
             font-weight: bold;
+            font-family: 'Lobster', cursive;
         }
 
         .navbar-toggler {
@@ -47,28 +49,17 @@
             text-decoration: none;
             color: #333;
             font-size: 18px;
-        }
-
-        .logo-container {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 2;
-        }
-
-        .logo-container img {
-            width: 200px;
-            height: auto;
+            font-family: 'Raleway', sans-serif;
         }
 
         .about-container {
             max-width: 1200px;
             margin: 80px auto 20px;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
-            animation: slideIn 1s;
+            animation: fadeInAnimation 1s;
             position: relative;
             z-index: 1;
         }
@@ -81,6 +72,7 @@
         .about-header h1 {
             font-size: 36px;
             color: #333;
+            font-family: 'Lobster', cursive;
         }
 
         .about-header h2 {
@@ -90,12 +82,17 @@
 
         .about-section {
             margin-bottom: 40px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
 
         .about-section h2 {
             font-size: 24px;
             color: #333;
             margin-bottom: 10px;
+            font-family: 'Raleway', sans-serif;
         }
 
         .about-section p {
@@ -126,7 +123,7 @@
             color: #444;
         }
 
-        @keyframes slideIn {
+        @keyframes fadeInAnimation {
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
@@ -159,7 +156,7 @@
             text-align: center;
             margin-top: 40px;
             position: relative;
-            z-index: 1;
+            z-index: -1;
             min-height: 400px;
         }
 
@@ -185,7 +182,8 @@
             border: 2px solid #40e0d0;
             padding: 20px;
             border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .team-member img {
@@ -199,6 +197,7 @@
             font-size: 22px;
             color: #333;
             margin: 10px 0 5px;
+            font-family: 'Raleway', sans-serif;
         }
 
         .team-member h4 {
@@ -210,6 +209,16 @@
         .team-member p {
             font-size: 16px;
             color: #666;
+            text-align: center;
+        }
+
+        .team-container h2 {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 20px;
+            font-family: 'Arial', sans-serif; 
+            font-weight: bold;
+            font-style: italic;
             text-align: center;
         }
 
@@ -226,7 +235,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
         }
 
         .background-slideshow img {
@@ -239,7 +247,7 @@
             animation: slideShow 20s infinite;
             opacity: 1;
             z-index: -1;
-            animation-delay: 0s;
+            animation-delay: 1s;
         }
 
         .background-slideshow img:nth-child(2) {
@@ -250,7 +258,7 @@
             animation-delay: 13.32s;
         }
 
-        @keyframes slideShow {
+        @keyframes fadeInAnimation {
             0% {
                 transform: translateX(0);
             }
@@ -267,51 +275,6 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">SkyGram Stays</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('explore') }}">Explore</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('our_destination') }}">Our Destination</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('list_your_property') }}">List Your Property</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('about_us') }}">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('contact_us') }}">Contact Us</a>
-                </li>
-                {% if 'user_id' in session %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ random_image_url }}" alt="User Icon" class="rounded-circle" width="30" height="30">
-                        Hi {{ session['first_name'] }} {{ session['last_name'] }}
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Edit Profile</a>
-                        <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
-                    </div>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
-
-    <div class="logo-container">
-        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
-    </div>
     <div class="background-slideshow">
         <img src="{{ url_for('static', filename='img/02.jpg') }}" alt="Background Image 1">
         <img src="{{ url_for('static', filename='img/01.jpg') }}" alt="Background Image 2">
@@ -326,7 +289,7 @@
             <div class="about-column">
                 <div class="about-section">
                     <h2>Our Philosophy</h2>
-                    <p>SkyGram Stays was founded on the belief that every traveller deserves the opportunity to explore the world in style, without compromising on quality or convenience. Whether you're seeking a tranquil beachside retreat, a vibrant urban escape, or an adventure in the heart of nature,we're here to make your dreams a reality.</p>
+                    <p>SkyGram Stays was founded on the belief that every traveller deserves the opportunity to explore the world in style, without compromising on quality or convenience. Whether you're seeking a tranquil beachside retreat, a vibrant urban escape, or an adventure in the heart of nature, we're here to make your dreams a reality.</p>
                 </div>
                 <div class="about-section">
                     <h2>Our Promise</h2>
@@ -349,26 +312,25 @@
         <h2>Meet Our Team</h2>
         <div class="team-members">
             <div class="team-member">
-                <img src="{{ url_for('static', filename='img/team1.jpg') }}" alt="Nirbhay Shah">
-                <h3>Nirbhay Shah</h3>
-                <h4>Head of Design</h4>
-                <p>Our head of design, Nirbhay Shah, holds a degree from a prestigious university in Pune. His career adventure has led him down an enthralling route that has taken him from the colorful landscapes of Vietnam to the bustling cityscape of Mumbai and the peaceful serenity of Alibaug. Today, Nirbhay proudly oversees an established architectural practice in Pune, bringing a wealth of knowledge and a global perspective to every project.</p>
-            </div>
-            <div class="team-member">
-                <img src="{{ url_for('static', filename='img/team3.jpg') }}" alt="Ayush Palesha">
+                <img src="{{ url_for('static', filename='img/ayush.jpg') }}" alt="Ayush Palesha">
                 <h3>Ayush Palesha</h3>
                 <h4>Operations and Legal Head</h4>
-                <p>In his role as SkyGram Stays' operations and legal head, Ayush Palesha diligently manages the business's ongoing operations and legal issues. Ayush has a strong foundation in civil engineering and brings to his position significant expertise in managing large-scale projects and ensuring compliance with all relevant regulations.</p>
+                <p>In his role as SkyGram Stays' operations and legal head, Ayush Palesha diligently manages the business's ongoing operations and legal issues. Ayush has a strong foundation in civil engineering and brings to his position significant expertise in managing large-scale projects and ensuring compliance with all relevant regulations, which contribute to the betterment.</p>
             </div>
             <div class="team-member">
-                <img src="{{ url_for('static', filename='img/team2.jpg') }}" alt="Manav Nibjiya">
+                <img src="{{ url_for('static', filename='img/manav.jpg') }}" alt="Manav Nibjiya">
                 <h3>Manav Nibjiya</h3>
                 <h4>Finance and Management Head</h4>
-                <p>At SkyGram Stays, Manav Nibjiya takes on the position of Finance and Management Head, where he plays a vital role in managing the organization's finances and general management. Manav is able to ensure the financial stability and strategic management of SkyGram Stays by using his special blend of technical and business abilities. He is committed to streamlining operations inside the business and maximizing resource allocation.</p>
+                <p>At SkyGram Stays, Manav Nibjiya takes on the position of Finance and Management Head, where he plays a vital role in managing the organization's finances and general management. Manav is able to ensure the financial stability and strategic management of SkyGram Stays by using his special blend of technical and business abilities. </p>
+            </div>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='img/nirbhay.jpg') }}" alt="Nirbhay Shah">
+                <h3>Nirbhay Shah</h3>
+                <h4>Head of Design</h4>
+                <p>Our head of design, Nirbhay Shah, holds a degree from a prestigious university in Pune. His career adventure has led him down an enthralling route that has taken him from the colorful landscapes of Vietnam to the bustling cityscape of Mumbai and the peaceful serenity of Alibaug. Today, Nirbhay proudly oversees an established architectural practice in Pune.</p>
             </div>
         </div>
     </div>
-    <p>Join SkyGram Stays as a host and list your property. Reach a global audience and earn by sharing your space with travellers.</p>
 
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -376,3 +338,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+{% endblock %}
