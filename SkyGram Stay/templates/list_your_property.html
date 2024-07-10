@@ -6,7 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Villa Form</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+
     <style>
+        .slider {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: auto;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .navigation {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .navigation button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .review {
+            text-align: center;
+            padding: 20px;
+        }
         .background-image {
             background-image: url('{{ url_for('static', filename='02.jpg') }}');
             background-size: cover;
@@ -22,7 +58,6 @@
             padding: 20px;
             border-radius: 10px;
             color: black;
-            /* Ensure text color is black */
         }
 
         .info-text {
@@ -80,24 +115,47 @@
             background: rgba(255, 255, 255, 0.9);
             padding: 0 5px;
         }
-    </style>
-    <script>
-        function showThankYouMessage() {
-            alert("Thank you for sharing your details. Our authority will get back to you soon.");
+
+        .additional-content {
+            background-color: #f9f9f9;
+            padding: 50px 0;
         }
 
-        function toggleProperties() {
-            var x = document.getElementById("propertyList");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
+        .additional-content .row {
+            margin-bottom: 30px;
         }
-    </script>
+
+        .additional-content h2 {
+            font-size: 1.75rem;
+            margin-bottom: 20px;
+        }
+
+        .additional-content p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .additional-content img {
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 
 <body>
+    {% extends 'base.html' %}
+
+    {% block content %}
     <div class="background-image container-fluid">
         <div class="row">
             <div class="col-md-6 d-flex align-items-center justify-content-center">
@@ -190,7 +248,7 @@
     <!-- Display first photo and villa details -->
     {% if first_photo %}
     <div class="card mt-3" style="width: 18rem;">
-        <img src="{{ url_for('static', filename='villa_photos_of_customer/' + first_photo.filename) }}" class="card-img-top" alt="First Photo">
+        <img src="{{ url_for('static', filename='02.jpg') }}" class="card-img-top" alt="First Photo">
         <div class="card-body">
             <h5 class="card-title">First Photo</h5>
             <p class="card-text">Villa ID: {{ first_photo.villa_id }}</p>
@@ -207,7 +265,7 @@
             <div class="property-box mt-3">
                 <h3>{{ villa.first_name }} {{ villa.last_name }}</h3>
                 {% if villa.photo %}
-                <img src="{{ url_for('static', filename='villa_photos_of_customer/' ~ villa.photo) }}" alt="First Photo" style="width:200px;height:200px;">
+                <img src="{{ url_for('static', filename='02.jpg') }}" alt="First Photo" style="width:200px;height:200px;">
                 {% endif %}
                 <a href="{{ url_for('view_property', villa_id=villa.id) }}" class="btn btn-primary mt-3">View Details</a>
             </div>
@@ -215,9 +273,96 @@
         </div>
     </div>
 
+    <!-- Image Slider for Reviews -->
     <div class="container mt-5">
-        <a href="{{ url_for('view_properties') }}" class="btn btn-secondary">Customer</a>
+        <h2 class="text-center">Customer Reviews</h2>
+        <div class="slider">
+            <div class="slide">
+                <div class="slide">
+                    <div class="review">
+                        <p>"SkyGram Stays made renting out my villa so easy and stress-free. Their team is professional and reliable!" - Sarah J.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="review">
+                        <p>"I was amazed by how quickly my property got booked after signing up with SkyGram Stays. Highly recommend!" - Michael B.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="review">
+                        <p>"Great service and fantastic support. SkyGram Stays is the best choice for any property owner!" - Emily R.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+            </div>
+        </div>
     </div>
+
+    <!-- Additional content section -->
+    <div class="container additional-content mt-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2>SkyGram Stays - Your Trusted Partner</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="{{ url_for('static', filename='02.jpg') }}" alt="Sample Image" class="img-fluid">
+            </div>
+        </div>
+        <div class="row align-items-center mt-4">
+            <div class="col-md-6 text-center">
+                <img src="{{ url_for('static', filename='02.jpg') }}" alt="Sample Image" class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <h2>Maximize Your Rental Income</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    <script>
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            const slides = document.querySelector('.slides');
+            const totalSlides = slides.children.length;
+            if (index >= totalSlides) {
+                currentIndex = 0;
+            } else if (index < 0) {
+                currentIndex = totalSlides - 1;
+            } else {
+                currentIndex = index;
+            }
+            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.next').addEventListener('click', () => {
+                showSlide(currentIndex + 1);
+            });
+
+            document.querySelector('.prev').addEventListener('click', () => {
+                showSlide(currentIndex - 1);
+            });
+        });
+
+        function toggleProperties() {
+            const propertyList = document.getElementById('propertyList');
+            if (propertyList.style.display === 'none' || propertyList.style.display === '') {
+                propertyList.style.display = 'block';
+            } else {
+                propertyList.style.display = 'none';
+            }
+        }
+
+        function showThankYouMessage() {
+            alert("Thank you for submitting the form!");
+        }
+    </script>
 </body>
 
 </html>
