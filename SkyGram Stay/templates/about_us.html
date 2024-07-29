@@ -12,6 +12,7 @@
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
+            background-image: url('{{ url_for('static', filename='img/bnb.jpg') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -19,51 +20,7 @@
             padding: 0;
             position: relative;
         }
-
-        .navbar {
-            position: relative;
-            top: 0;
-            width: 100%;;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 20px;
-        }
-
-        .navbar-brand {
-            font-size: 24px;
-            font-weight: bold;
-            font-family: 'Lobster', cursive;
-        }
-
-        .navbar-toggler {
-            display: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-size: 18px;
-            font-family: 'Raleway', sans-serif;
-        }
-
-        .about-container {
-            max-width: 1200px;
-            margin: 80px auto 20px;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            animation: fadeInAnimation 1s;
-            position: relative;
-            z-index: 1;
-        }
-
+        
         .about-header {
             text-align: center;
             margin-bottom: 40px;
@@ -73,11 +30,6 @@
             font-size: 36px;
             color: #333;
             font-family: 'Lobster', cursive;
-        }
-
-        .about-header h2 {
-            font-size: 28px;
-            color: #555;
         }
 
         .about-section {
@@ -123,11 +75,6 @@
             color: #444;
         }
 
-        @keyframes fadeInAnimation {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
         @media (min-width: 768px) {
             .about-content {
                 flex-direction: row;
@@ -136,19 +83,6 @@
 
             .about-column {
                 flex: 1;
-            }
-
-            .navbar-toggler {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-                flex-direction: column;
-            }
-
-            .navbar-toggler.open + .nav-links {
-                display: flex;
             }
         }
 
@@ -214,7 +148,7 @@
 
         .team-container h2 {
             font-size: 32px;
-            color: white;
+            color: black;
             margin-bottom: 20px;
             font-family: 'Arial', sans-serif; 
             font-weight: bold;
@@ -229,84 +163,78 @@
             }
         }
 
-        .background-slideshow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .backend-team {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: left;
         }
 
-        .background-slideshow img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            animation: slideShow 20s infinite;
-            opacity: 1;
-            z-index: -1;
-            animation-delay: 1s;
+        .backend-team h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+            font-family: 'Raleway', sans-serif;
+            text-align: center;
         }
 
-        .background-slideshow img:nth-child(2) {
-            animation-delay: 6.66s;
+        .backend-team p, .backend-team ul {
+            text-align: left;
+            color: #666;
+            line-height: 1.6;
         }
 
-        .background-slideshow img:nth-child(3) {
-            animation-delay: 13.32s;
+        .backend-team ul {
+            list-style-type: disc;
+            padding-left: 20px;
         }
 
-        @keyframes fadeInAnimation {
-            0% {
-                transform: translateX(0);
-            }
-            33% {
-                transform: translateX(-100%);
-            }
-            66% {
-                transform: translateX(-200%);
-            }
-            100% {
-                transform: translateX(0);
-            }
+        .backend-team li {
+            margin-bottom: 10px;
+        }
+
+        .backend-team li strong {
+            color: #333;
+        }
+
+        .our-journey {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .our-journey h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+            font-family: 'Raleway', sans-serif;
+            text-align: center;
+        }
+
+        .our-journey ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .our-journey li {
+            margin-bottom: 10px;
+        }
+
+        .our-journey li strong {
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="background-slideshow">
-        <img src="{{ url_for('static', filename='img/02.jpg') }}" alt="Background Image 1">
-        <img src="{{ url_for('static', filename='img/01.jpg') }}" alt="Background Image 2">
-        <img src="{{ url_for('static', filename='img/03.jpg') }}" alt="Background Image 3">
-    </div>
-    <div class="about-container">
-        <div class="about-header">
-            <h1>About Us</h1>
-            <h2>Learn more about our company and mission</h2>
-        </div>
-        <div class="about-content">
-            <div class="about-column">
-                <div class="about-section">
-                    <h2>Our Philosophy</h2>
-                    <p>SkyGram Stays was founded on the belief that every traveller deserves the opportunity to explore the world in style, without compromising on quality or convenience. Whether you're seeking a tranquil beachside retreat, a vibrant urban escape, or an adventure in the heart of nature, we're here to make your dreams a reality.</p>
-                </div>
-                <div class="about-section">
-                    <h2>Our Promise</h2>
-                    <p>When you choose SkyGram Stays, you’re not just booking a place to stay – you’re embarking on an adventure curated with care and attention to detail. Whether you’re traveling solo, with family, or with friends, we’re committed to helping you create memories that last a lifetime.</p>
-                </div>
-            </div>
-            <div class="about-column">
-                <div class="about-section">
-                    <h2>Our Vision</h2>
-                    <p>At SkyGram Stays, our mission is to redefine the vacation rental experience by providing exceptional properties, personalized service, and unforgettable moments for every guest. We aim to inspire exploration, foster connections, and create cherished memories that last a lifetime.</p>
-                </div>
-                <div class="about-section">
-                    <h2>Our Mission</h2>
-                    <p>Our vision at SkyGram Stays is to become the premier choice for discerning travelers seeking unparalleled luxury, comfort, and convenience in their vacation accommodations. We envision a future where every guest feels like a cherished member of the SkyGram Stays family, and where our commitment to excellence sets the standard for the industry. Through innovation, integrity, and a relentless dedication to customer satisfaction, we strive to elevate the art of travel and transform ordinary vacations into extraordinary adventures.</p>
-                </div>
-            </div>
-        </div>
+    <div class="about-header">
+        <h1>About Us</h1>
     </div>
     <div class="team-container">
         <h2>Meet Our Team</h2>
@@ -329,6 +257,26 @@
                 <h4>Head of Design</h4>
                 <p>Our head of design, Nirbhay Shah, holds a degree from a prestigious university in Pune. His career adventure has led him down an enthralling route that has taken him from the colorful landscapes of Vietnam to the bustling cityscape of Mumbai and the peaceful serenity of Alibaug. Today, Nirbhay proudly oversees an established architectural practice in Pune.</p>
             </div>
+        </div>
+        <div class="backend-team">
+            <h3>Our Backend Team</h3>
+            <p>We Are Nothing Without Our Complete Team:</p>
+            <ul>
+                <li><strong>Marketing Team:</strong> Our marketing team runs ads, collaborates with partners, and executes multiple campaigns daily to market your villa effectively.</li>
+                <li><strong>Sales and Operations Team:</strong> Our sales team handles all leads and attends to in-house guests, ensuring every query is promptly addressed.</li>
+                <li><strong>IT Team:</strong> Our dedicated IT team maintains our website and manages our listings on other portals, ensuring a seamless online experience.</li>
+                <li><strong>Ground Support Staff:</strong> Our ground support staff is the backbone of our operations, managing inspections, stocking, and emergency coordination to ensure everything runs smoothly.</li>
+            </ul>
+        </div>
+
+        <div class="our-journey">
+            <h3>What We Aim For:</h3>
+            <ul class="aim-list">
+                <li><strong>Quality over Quantity:</strong> Target to manage only 5-6 villas in any given area.</li>
+                <li><strong>Regional Focus:</strong> Establish ourselves primarily around Maharashtra.</li>
+                <li><strong>Individual Promotion:</strong> Marketing each villa rather than promoting the location.</li>
+                <li><strong>Exceptional Guest Experiences:</strong> Every getaway is truly exceptional and memorable.</li>
+            </ul>
         </div>
     </div>
 
