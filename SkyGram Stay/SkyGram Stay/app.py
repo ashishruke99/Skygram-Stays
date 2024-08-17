@@ -285,5 +285,5 @@ def view_property(villa_id):
     return render_template('property_detail.html', villa=villa)
 
 if __name__ == '__main__':
-init_db()  # Ensure the database is initialized
-app.run(host='0.0.0.0', port=5000, debug=True)
+    init_db()  # Ensure the database is initialized
+    app.run(host='0.0.0.0', port=5000, debug=True)
