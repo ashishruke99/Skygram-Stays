@@ -64,4 +64,5 @@ def create_account():
     return 'Create New Account page - To be implemented'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+init_db()
+app.run(host='0.0.0.0', port=5000, debug=True)
