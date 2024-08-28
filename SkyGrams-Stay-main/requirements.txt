@@ -5,3 +5,4 @@ razorpay
 psycopg2-binary
 Flask-Mail
 SQLAlchemy
+psycopg2
