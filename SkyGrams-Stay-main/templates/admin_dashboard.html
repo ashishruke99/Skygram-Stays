@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #f4f4f4;
+            padding-top: 60px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            transition: width 0.3s ease;
+            z-index: 2;
+        }
+        .sidebar.hidden {
+            width: 50px;
+        }
+        .sidebar.hidden .admin-options {
+            display: none;
+        }
+        .sidebar button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+        .sidebar button:hover {
+            background-color: #45a049;
+        }
+        .content {
+            margin-left: 240px; /* Adjusted margin */
+            padding: 20px;
+            flex: 1;
+            transition: margin-left 0.3s ease;
+        }
+        .content.minimized {
+            margin-left: 50px;
+        }
+        .menu-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            color: #4CAF50;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 3;
+        }
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+        .menu-btn-top {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 2;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .search-container {
+            float: right;
+            margin-bottom: 10px;
+        }
+        .search-container input[type=text] {
+            padding: 6px;
+            margin-top: 8px;
+            margin-right: 16px;
+            border: none;
+            font-size: 17px;
+        }
+        .search-container button {
+            padding: 6px;
+            margin-top: 8px;
+            margin-right: 16px;
+            border: none;
+            font-size: 17px;
+            cursor: pointer;
+        }
+        .no-results {
+            color: red;
+            font-weight: bold;
+        }
+        .guest-info {
+            margin-left: 10px;
+        }
+        .property-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px;
+            text-align: center;
+        }
+        .property-box img {
+            max-width: 100%;
+            height: auto;
+        }
+        .amenity-option {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .amenity-option img {
+            margin-right: 15px;
+        }
+        
+        .amenity-option label {
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .amenity-option div {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            margin-left: auto;
+        }
+        
+        .amenity-option div label {
+            font-weight: normal;
+            margin-bottom: 5px;
+        }
+        
+        .amenity-option input[type="radio"] {
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+                body {
+                    flex-direction: column;
+                }
+            
+                .top-bar {
+                    position: fixed;
+                    width: 100%;
+                    height: 50px;
+                    z-index: 1000;
+                }
+            
+                .sidebar {
+                    width: 100%;
+                    height: auto;
+                    position: fixed;
+                    top: 50px;
+                    left: 0;
+                    z-index: 999;
+                    display: none;
+                }
+            
+                .sidebar.open {
+                    display: block;
+                }
+            
+                .menu-btn, .menu-btn-top {
+                    display: block;
+                }
+            
+                .content {
+                    margin: 60px 0 0 0;
+                    padding: 20px;
+                    flex: 1;
+                }
+            
+                .customer-info, .guest-info, .view-properties, .add-Property {
+                    padding: 15px;
+                }
+            
+                table {
+                    width: 100%;
+                    font-size: 14px;
+                }
+            
+                th, td {
+                    padding: 10px;
+                    word-break: break-word;
+                }
+            
+                .search-container {
+                    float: none;
+                    width: 100%;
+                    margin-bottom: 10px;
+                    display: flex;
+                    justify-content: space-between;
+                }
+            
+                .search-container input[type="text"], .search-container button {
+                    width: 48%;
+                    font-size: 14px;
+                }
+            
+                .property-box {
+                    margin: 15px 0;
+                }
+            
+                .property-box img {
+                    max-width: 100%;
+                    height: auto;
+                }
+
+                .amenity-option {
+                    flex-direction: column;
+                    text-align: center;
+                }
+            
+                .amenity-option img {
+                    margin-bottom: 10px;
+                }
+            
+                .amenity-option div {
+                    align-items: center;
+                    margin-left: 0;
+                }
+            }       
+    
+    </style>
+</head>
+<body>
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
+        <h2 class="admin-options">Admin Options</h2>
+        <button class="admin-options" onclick="toggleSection('customerInfo')">View Customer Information</button>
+        <button class="admin-options" onclick="toggleSection('addProperty')">Add Property</button>
+        <button class="admin-options" onclick="toggleSection('addEvent')">Add Event</button>
+        <button class="admin-options" onclick="toggleSection('guestInfo')">Guest Customer Information</button>
+        <button class="admin-options" onclick="toggleSection('viewProperties')">View Properties</button>
+        <button class="admin-options" onclick="window.location.href='{{ url_for('edit_prices') }}'">Edit Prices</button>
+        <button class="admin-options" onclick="window.location.href='{{ url_for('delete_property') }}'">Delete Prooerty</button>
+    </div>
+    <div class="content" id="content">
+        <div id="customerInfo" class="customer-info">
+            <h2>Customer Information</h2>
+            <div class="search-container">
+                <form method="POST" action="{{ url_for('admin_dashboard') }}">
+                    <input type="text" id="search_key" name="search_key" placeholder="Search..." value="{{ search_key }}">
+                    <button type="submit">Search</button>
+                    <button type="button" onclick="clearSearch()">Clear</button>
+                </form>
+            </div>
+            {% if customers %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Date of Birth</th>
+                        <th>Password</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer[0] }}</td>
+                        <td>{{ customer[1] }}</td>
+                        <td>{{ customer[2] }}</td>
+                        <td>{{ customer[3] }}</td>
+                        <td>{{ customer[4] }}</td>
+                        <td>{{ customer[5] }}</td>
+                        <td>{{ customer[6] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="no-results">No results found.</p>
+            {% endif %}
+        </div>
+
+        <div id="guestInfo" class="guest-info" style="display: none;">
+            <h2>Guest Customer Information</h2>
+            <table id="guestTable">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Place to Visit</th>
+                    <th>Check-in Date</th>
+                    <th>Check-out Date</th>
+                    <th>Adults</th>
+                    <th>Children</th>
+                    <th>Infants</th>
+                </tr>
+                {% for guest in guest_customers %}
+                <tr>
+                    <td>{{ guest[1] }}</td> <!-- Name -->
+                    <td>{{ guest[2] }}</td> <!-- Email -->
+                    <td>{{ guest[3] }}</td> <!-- Mobile -->
+                    <td>{{ guest[4] }}</td> <!-- Place to Visit -->
+                    <td>{{ guest[5] }}</td> <!-- Check-in Date -->
+                    <td>{{ guest[6] }}</td> <!-- Check-out Date -->
+                    <td>{{ guest[7] }}</td> <!-- Adults -->
+                    <td>{{ guest[8] }}</td> <!-- Children -->
+                    <td>{{ guest[9] }}</td> <!-- Infants -->
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div id="viewProperties" class="view-properties" style="display: none;">
+            <div class="container mt-5">
+                <div class="row">
+                    {% for villa in villas|reverse %}
+                        <div class="col-md-4">
+                            <div class="property-box">
+                                <span class="delete-button" data-villa-id="{{ villa.id }}">&times;</span>
+                                <h3>{{ villa.first_name }}</h3>
+                                {% if villa.photos %}
+                                    <img src="{{ url_for('static', filename='villa_photos_of_customer/' ~ villa.photos[0].filename) }}" alt="Property Image">
+                                {% endif %}
+                                <a href="{{ url_for('view_property', villa_id=villa.id) }}" class="btn btn-primary mt-3">View Details</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Delete Confirmation Modal -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this property information?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <form id="deleteForm" method="POST">
+                                <input type="hidden" id="villaIdInput" name="villa_id">
+                                <button type="button" class="btn btn-danger" id="confirmDelete">Yes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="addProperty" class="add-Property" style="display: none;">
+            <div class="container">
+                <h1>Add New Property</h1>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form action="{{ url_for('submitP') }}" method="POST" enctype="multipart/form-data">
+                    <!-- Basic property details -->
+                    <div class="form-group">
+                        <label for="property_name">Property Name:</label>
+                        <input type="text" class="form-control" id="property_name" name="property_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <input type="text" class="form-control" id="location" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guest_capacity">Guest Capacity:</label>
+                        <input type="number" class="form-control" id="guest_capacity" name="guest_capacity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="room_count">Room Count:</label>
+                        <input type="number" class="form-control" id="room_count" name="room_count" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="baths">Baths:</label>
+                        <input type="number" class="form-control" id="baths" name="baths" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Rating:</label>
+                        <input type="number" class="form-control" id="rating" name="rating" step="0.1" required>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="great_for">Great For:</label>
+                        <input type="text" class="form-control" id="great_for" name="great_for" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price:</label>
+                        <input type="number" class="form-control" id="price" name="price" required>
+                    </div>
+                    <!-- Include CKEditor from CDN -->
+                    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+
+                    <!-- Update the input field -->
+                    <div class="form-group">
+                        <label for="highlights">Highlights:</label>
+                        <textarea class="form-control" id="highlights" name="highlights"></textarea>
+                    </div>
+
+                    <!-- Initialize CKEditor -->
+                    <script>
+                        CKEDITOR.replace('highlights');
+                    </script>
+
+                    <div class="form-group">
+                        <label for="rule">House Rule:</label>
+                        <textarea class="form-control" id="rule" name="rule"></textarea>
+                    </div>
+                                        <!-- Initialize CKEditor -->
+                    <script>
+                        CKEDITOR.replace('rule');
+                    </script>
+                    
+                    <div class="form-group">
+                        <label for="cover_photo">Cover Photo:</label>
+                        <input type="file" class="form-control-file" id="cover_photo" name="cover_photo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location_description">Location Description:</label>
+                        <textarea class="form-control" id="location_description" name="location_description"></textarea>
+                    </div>
+                    <script>
+                        CKEDITOR.replace('location_description');
+                    </script>
+                    <div class="form-group">
+                        <label for="location_link">Location Link:</label>
+                        <input type="url" class="form-control" id="location_link" name="location_link">
+                    </div>
+        
+                    <!-- Property Images -->
+                    <div class="form-group">
+                        <label for="images">Property Images:</label>
+                        <input type="file" class="form-control-file" id="images" name="images" multiple>
+                    </div>
+        
+                    <!-- Amenities -->
+                    <div class="form-group">
+                        <label for="amenities">Amenities</label>
+                        <div class="amenity-option">
+                            <label for="tv">TV</label>
+                            <img src="{{ url_for('static', filename='icon/TV.webp') }}" alt="TV" width="30">
+                            <div>
+                                <input type="radio" id="tv_available" name="amenities_tv" value="available">
+                                <label for="tv_available">Available</label>
+                            
+                                <input type="radio" id="tv_paid" name="amenities_tv" value="paid">
+                                <label for="tv_paid">Paid</label>
+                            
+                                <input type="radio" id="tv_not_available" name="amenities_tv" value="not_available">
+                                <label for="tv_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="toiletries">Toiletries</label>
+                            <img src="{{ url_for('static', filename='icon/Toiletries.webp') }}" alt="Toiletries" width="30">
+                            <div>
+                                <input type="radio" id="toiletries_available" name="amenities_toiletries" value="available">
+                                <label for="toiletries_available">Available</label>
+                            
+                                <input type="radio" id="toiletries_paid" name="amenities_toiletries" value="paid">
+                                <label for="toiletries_paid">Paid</label>
+                            
+                                <input type="radio" id="toiletries_not_available" name="amenities_toiletries" value="not_available">
+                                <label for="toiletries_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="wardrobe">Wardrobe</label>
+                            <img src="{{ url_for('static', filename='icon/Wardrobe.webp') }}" alt="Wardrobe" width="30">
+                            <div>
+                                <input type="radio" id="wardrobe_available" name="amenities_wardrobe" value="available">
+                                <label for="wardrobe_available">Available</label>
+                            
+                                <input type="radio" id="wardrobe_paid" name="amenities_wardrobe" value="paid">
+                                <label for="wardrobe_paid">Paid</label>
+                            
+                                <input type="radio" id="wardrobe_not_available" name="amenities_wardrobe" value="not_available">
+                                <label for="wardrobe_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="ac">AC</label>
+                            <img src="{{ url_for('static', filename='icon/AC.webp') }}" alt="AC" width="30">
+                            <div>
+                                <input type="radio" id="ac_available" name="amenities_ac" value="available">
+                                <label for="ac_available">Available</label>
+                            
+                                <input type="radio" id="ac_paid" name="amenities_ac" value="paid">
+                                <label for="ac_paid">Paid</label>
+                            
+                                <input type="radio" id="ac_not_available" name="amenities_ac" value="not_available">
+                                <label for="ac_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="balcony">Balcony</label>
+                            <img src="{{ url_for('static', filename='icon/Balcony.webp') }}" alt="Balcony" width="30">
+                            <div>
+                                <input type="radio" id="balcony_available" name="amenities_balcony" value="available">
+                                <label for="balcony_available">Available</label>
+                            
+                                <input type="radio" id="balcony_paid" name="amenities_balcony" value="paid">
+                                <label for="balcony_paid">Paid</label>
+                            
+                                <input type="radio" id="balcony_not_available" name="amenities_balcony" value="not_available">
+                                <label for="balcony_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="bar">Bar</label>
+                            <img src="{{ url_for('static', filename='icon/Bar.webp') }}" alt="Bar" width="30">
+                            <div>
+                                <input type="radio" id="bar_available" name="amenities_bar" value="available">
+                                <label for="bar_available">Available</label>
+                            
+                                <input type="radio" id="bar_paid" name="amenities_bar" value="paid">
+                                <label for="bar_paid">Paid</label>
+                            
+                                <input type="radio" id="bar_not_available" name="amenities_bar" value="not_available">
+                                <label for="bar_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="bathtub">Bathtub</label>
+                            <img src="{{ url_for('static', filename='icon/Bathtub.webp') }}" alt="Bathtub" width="30">
+                            <div>
+                                <input type="radio" id="bathtub_available" name="amenities_bathtub" value="available">
+                                <label for="bathtub_available">Available</label>
+                            
+                                <input type="radio" id="bathtub_paid" name="amenities_bathtub" value="paid">
+                                <label for="bathtub_paid">Paid</label>
+                            
+                                <input type="radio" id="bathtub_not_available" name="amenities_bathtub" value="not_available">
+                                <label for="bathtub_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="bbq">BBQ</label>
+                            <img src="{{ url_for('static', filename='icon/BBQ.webp') }}" alt="BBQ" width="30">
+                            <div>
+                                <input type="radio" id="bbq_available" name="amenities_bbq" value="available">
+                                <label for="bbq_available">Available</label>
+                            
+                                <input type="radio" id="bbq_paid" name="amenities_bbq" value="paid">
+                                <label for="bbq_paid">Paid</label>
+                            
+                                <input type="radio" id="bbq_not_available" name="amenities_bbq" value="not_available">
+                                <label for="bbq_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="bluetooth-speaker">Bluetooth Speaker</label>
+                            <img src="{{ url_for('static', filename='icon/Bluetooth-speaker.webp') }}" alt="Bluetooth Speaker" width="30">
+                            <div>
+                                <input type="radio" id="bluetooth-speaker_available" name="amenities_bluetooth-speaker" value="available">
+                                <label for="bluetooth-speaker_available">Available</label>
+                            
+                                <input type="radio" id="bluetooth-speaker_paid" name="amenities_bluetooth-speaker" value="paid">
+                                <label for="bluetooth-speaker_paid">Paid</label>
+                            
+                                <input type="radio" id="bluetooth-speaker_not_available" name="amenities_bluetooth-speaker" value="not_available">
+                                <label for="bluetooth-speaker_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="bonfire">Bonfire</label>
+                            <img src="{{ url_for('static', filename='icon/Bonfire.webp') }}" alt="Bonfire" width="30">
+                            <div>
+                                <input type="radio" id="bonfire_available" name="amenities_bonfire" value="available">
+                                <label for="bonfire_available">Available</label>
+                            
+                                <input type="radio" id="bonfire_paid" name="amenities_bonfire" value="paid">
+                                <label for="bonfire_paid">Paid</label>
+                            
+                                <input type="radio" id="bonfire_not_available" name="amenities_bonfire" value="not_available">
+                                <label for="bonfire_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="cctv-exterior">CCTV Exterior</label>
+                            <img src="{{ url_for('static', filename='icon/CCTV-exterior.webp') }}" alt="CCTV Exterior" width="30">
+                            <div>
+                                <input type="radio" id="cctv-exterior_available" name="amenities_cctv-exterior" value="available">
+                                <label for="cctv-exterior_available">Available</label>
+                            
+                                <input type="radio" id="cctv-exterior_paid" name="amenities_cctv-exterior" value="paid">
+                                <label for="cctv-exterior_paid">Paid</label>
+                            
+                                <input type="radio" id="cctv-exterior_not_available" name="amenities_cctv-exterior" value="not_available">
+                                <label for="cctv-exterior_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="cctv-interior">CCTV Interior</label>
+                            <img src="{{ url_for('static', filename='icon/CCTV-interior.webp') }}" alt="CCTV Interior" width="30">
+                            <div>
+                                <input type="radio" id="cctv-interior_available" name="amenities_cctv-interior" value="available">
+                                <label for="cctv-interior_available">Available</label>
+                            
+                                <input type="radio" id="cctv-interior_paid" name="amenities_cctv-interior" value="paid">
+                                <label for="cctv-interior_paid">Paid</label>
+                            
+                                <input type="radio" id="cctv-interior_not_available" name="amenities_cctv-interior" value="not_available">
+                                <label for="cctv-interior_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="driver-staff-stay">Driver Staff Stay</label>
+                            <img src="{{ url_for('static', filename='icon/Driver-staff stay.webp') }}" alt="Driver Staff Stay" width="30">
+                            <div>
+                                <input type="radio" id="driver-staff-stay_available" name="amenities_driver-staff-stay" value="available">
+                                <label for="driver-staff-stay_available">Available</label>
+                            
+                                <input type="radio" id="driver-staff-stay_paid" name="amenities_driver-staff-stay" value="paid">
+                                <label for="driver-staff-stay_paid">Paid</label>
+                            
+                                <input type="radio" id="driver-staff-stay_not_available" name="amenities_driver-staff-stay" value="not_available">
+                                <label for="driver-staff-stay_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="extra-mattress">Extra Mattress</label>
+                            <img src="{{ url_for('static', filename='icon/Extra-mattress.webp') }}" alt="Extra Mattress" width="30">
+                            <div>
+                                <input type="radio" id="extra-mattress_available" name="amenities_extra-mattress" value="available">
+                                <label for="extra-mattress_available">Available</label>
+                            
+                                <input type="radio" id="extra-mattress_paid" name="amenities_extra-mattress" value="paid">
+                                <label for="extra-mattress_paid">Paid</label>
+                            
+                                <input type="radio" id="extra-mattress_not_available" name="amenities_extra-mattress" value="not_available">
+                                <label for="extra-mattress_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="fire-extinguisher">Fire Extinguisher</label>
+                            <img src="{{ url_for('static', filename='icon/Fire-extinguisher.webp') }}" alt="Fire Extinguisher" width="30">
+                            <div>
+                                <input type="radio" id="fire-extinguisher_available" name="amenities_fire-extinguisher" value="available">
+                                <label for="fire-extinguisher_available">Available</label>
+                            
+                                <input type="radio" id="fire-extinguisher_paid" name="amenities_fire-extinguisher" value="paid">
+                                <label for="fire-extinguisher_paid">Paid</label>
+                            
+                                <input type="radio" id="fire-extinguisher_not_available" name="amenities_fire-extinguisher" value="not_available">
+                                <label for="fire-extinguisher_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="gazebo">Gazebo</label>
+                            <img src="{{ url_for('static', filename='icon/Gazebo.webp') }}" alt="Gazebo" width="30">
+                            <div>
+                                <input type="radio" id="gazebo_available" name="amenities_gazebo" value="available">
+                                <label for="gazebo_available">Available</label>
+                            
+                                <input type="radio" id="gazebo_paid" name="amenities_gazebo" value="paid">
+                                <label for="gazebo_paid">Paid</label>
+                            
+                                <input type="radio" id="gazebo_not_available" name="amenities_gazebo" value="not_available">
+                                <label for="gazebo_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="hair-dryer">Hair Dryer</label>
+                            <img src="{{ url_for('static', filename='icon/Hair-dryer.webp') }}" alt="Hair Dryer" width="30">
+                            <div>
+                                <input type="radio" id="hair-dryer_available" name="amenities_hair-dryer" value="available">
+                                <label for="hair-dryer_available">Available</label>
+                            
+                                <input type="radio" id="hair-dryer_paid" name="amenities_hair-dryer" value="paid">
+                                <label for="hair-dryer_paid">Paid</label>
+                            
+                                <input type="radio" id="hair-dryer_not_available" name="amenities_hair-dryer" value="not_available">
+                                <label for="hair-dryer_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="heater">Heater</label>
+                            <img src="{{ url_for('static', filename='icon/Heater.webp') }}" alt="Heater" width="30">
+                            <div>
+                                <input type="radio" id="heater_available" name="amenities_heater" value="available">
+                                <label for="heater_available">Available</label>
+                            
+                                <input type="radio" id="heater_paid" name="amenities_heater" value="paid">
+                                <label for="heater_paid">Paid</label>
+                            
+                                <input type="radio" id="heater_not_available" name="amenities_heater" value="not_available">
+                                <label for="heater_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="indoor-games">Indoor Games</label>
+                            <img src="{{ url_for('static', filename='icon/Indoor-games.webp') }}" alt="Indoor Games" width="30">
+                            <div>
+                                <input type="radio" id="indoor-games_available" name="amenities_indoor-games" value="available">
+                                <label for="indoor-games_available">Available</label>
+                            
+                                <input type="radio" id="indoor-games_paid" name="amenities_indoor-games" value="paid">
+                                <label for="indoor-games_paid">Paid</label>
+                            
+                                <input type="radio" id="indoor-games_not_available" name="amenities_indoor-games" value="not_available">
+                                <label for="indoor-games_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="jacuzzi">Jacuzzi</label>
+                            <img src="{{ url_for('static', filename='icon/Jacuzzi.webp') }}" alt="Jacuzzi" width="30">
+                            <div>
+                                <input type="radio" id="jacuzzi_available" name="amenities_jacuzzi" value="available">
+                                <label for="jacuzzi_available">Available</label>
+                            
+                                <input type="radio" id="jacuzzi_paid" name="amenities_jacuzzi" value="paid">
+                                <label for="jacuzzi_paid">Paid</label>
+                            
+                                <input type="radio" id="jacuzzi_not_available" name="amenities_jacuzzi" value="not_available">
+                                <label for="jacuzzi_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="lawn">Lawn</label>
+                            <img src="{{ url_for('static', filename='icon/Lawn.webp') }}" alt="Lawn" width="30">
+                            <div>
+                                <input type="radio" id="lawn_available" name="amenities_lawn" value="available">
+                                <label for="lawn_available">Available</label>
+                            
+                                <input type="radio" id="lawn_paid" name="amenities_lawn" value="paid">
+                                <label for="lawn_paid">Paid</label>
+                            
+                                <input type="radio" id="lawn_not_available" name="amenities_lawn" value="not_available">
+                                <label for="lawn_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="mini-fridge">Mini Fridge</label>
+                            <img src="{{ url_for('static', filename='icon/Mini-Fridge.webp') }}" alt="Mini Fridge" width="30">
+                            <div>
+                                <input type="radio" id="mini-fridge_available" name="amenities_mini-fridge" value="available">
+                                <label for="mini-fridge_available">Available</label>
+                            
+                                <input type="radio" id="mini-fridge_paid" name="amenities_mini-fridge" value="paid">
+                                <label for="mini-fridge_paid">Paid</label>
+                            
+                                <input type="radio" id="mini-fridge_not_available" name="amenities_mini-fridge" value="not_available">
+                                <label for="mini-fridge_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="music-system">Music System</label>
+                            <img src="{{ url_for('static', filename='icon/Music-system.webp') }}" alt="Music System" width="30">
+                            <div>
+                                <input type="radio" id="music-system_available" name="amenities_music-system" value="available">
+                                <label for="music-system_available">Available</label>
+                            
+                                <input type="radio" id="music-system_paid" name="amenities_music-system" value="paid">
+                                <label for="music-system_paid">Paid</label>
+                            
+                                <input type="radio" id="music-system_not_available" name="amenities_music-system" value="not_available">
+                                <label for="music-system_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="outdoor-games">Outdoor Games</label>
+                            <img src="{{ url_for('static', filename='icon/Outdoor-games.webp') }}" alt="Outdoor Games" width="30">
+                            <div>
+                                <input type="radio" id="outdoor-games_available" name="amenities_outdoor-games" value="available">
+                                <label for="outdoor-games_available">Available</label>
+                            
+                                <input type="radio" id="outdoor-games_paid" name="amenities_outdoor-games" value="paid">
+                                <label for="outdoor-games_paid">Paid</label>
+                            
+                                <input type="radio" id="outdoor-games_not_available" name="amenities_outdoor-games" value="not_available">
+                                <label for="outdoor-games_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="parking">Parking</label>
+                            <img src="{{ url_for('static', filename='icon/Parking.webp') }}" alt="Parking" width="30">
+                            <div>
+                                <input type="radio" id="parking_available" name="amenities_parking" value="available">
+                                <label for="parking_available">Available</label>
+                            
+                                <input type="radio" id="parking_paid" name="amenities_parking" value="paid">
+                                <label for="parking_paid">Paid</label>
+                            
+                                <input type="radio" id="parking_not_available" name="amenities_parking" value="not_available">
+                                <label for="parking_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="pet-friendly">Pet Friendly</label>
+                            <img src="{{ url_for('static', filename='icon/Pet-friendly.webp') }}" alt="Pet Friendly" width="30">
+                            <div>
+                                <input type="radio" id="pet-friendly_available" name="amenities_pet-friendly" value="available">
+                                <label for="pet-friendly_available">Available</label>
+                            
+                                <input type="radio" id="pet-friendly_paid" name="amenities_pet-friendly" value="paid">
+                                <label for="pet-friendly_paid">Paid</label>
+                            
+                                <input type="radio" id="pet-friendly_not_available" name="amenities_pet-friendly" value="not_available">
+                                <label for="pet-friendly_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="private-pool">Private Pool</label>
+                            <img src="{{ url_for('static', filename='icon/Private-Pool.webp') }}" alt="Private Pool" width="30">
+                            <div>
+                                <input type="radio" id="private-pool_available" name="amenities_private-pool" value="available">
+                                <label for="private-pool_available">Available</label>
+                            
+                                <input type="radio" id="private-pool_paid" name="amenities_private-pool" value="paid">
+                                <label for="private-pool_paid">Paid</label>
+                            
+                                <input type="radio" id="private-pool_not_available" name="amenities_private-pool" value="not_available">
+                                <label for="private-pool_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="projector">Projector</label>
+                            <img src="{{ url_for('static', filename='icon/Projector.webp') }}" alt="Projector" width="30">
+                            <div>
+                                <input type="radio" id="projector_available" name="amenities_projector" value="available">
+                                <label for="projector_available">Available</label>
+                            
+                                <input type="radio" id="projector_paid" name="amenities_projector" value="paid">
+                                <label for="projector_paid">Paid</label>
+                            
+                                <input type="radio" id="projector_not_available" name="amenities_projector" value="not_available">
+                                <label for="projector_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="refrigerator">Refrigerator</label>
+                            <img src="{{ url_for('static', filename='icon/Refrigerator.webp') }}" alt="Refrigerator" width="30">
+                            <div>
+                                <input type="radio" id="refrigerator_available" name="amenities_refrigerator" value="available">
+                                <label for="refrigerator_available">Available</label>
+                            
+                                <input type="radio" id="refrigerator_paid" name="amenities_refrigerator" value="paid">
+                                <label for="refrigerator_paid">Paid</label>
+                            
+                                <input type="radio" id="refrigerator_not_available" name="amenities_refrigerator" value="not_available">
+                                <label for="refrigerator_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="towels">Towels</label>
+                            <img src="{{ url_for('static', filename='icon/Towels.webp') }}" alt="Towels" width="30">
+                            <div>
+                                <input type="radio" id="towels_available" name="amenities_towels" value="available">
+                                <label for="towels_available">Available</label>
+                            
+                                <input type="radio" id="towels_paid" name="amenities_towels" value="paid">
+                                <label for="towels_paid">Paid</label>
+                            
+                                <input type="radio" id="towels_not_available" name="amenities_towels" value="not_available">
+                                <label for="towels_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="water-purifier">Water Purifier</label>
+                            <img src="{{ url_for('static', filename='icon/Water-Purifier.webp') }}" alt="Water Purifier" width="30">
+                            <div>
+                                <input type="radio" id="water-purifier_available" name="amenities_water-purifier" value="available">
+                                <label for="water-purifier_available">Available</label>
+                            
+                                <input type="radio" id="water-purifier_paid" name="amenities_water-purifier" value="paid">
+                                <label for="water-purifier_paid">Paid</label>
+                            
+                                <input type="radio" id="water-purifier_not_available" name="amenities_water-purifier" value="not_available">
+                                <label for="water-purifier_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="wheelchair-friendly">Wheelchair Friendly</label>
+                            <img src="{{ url_for('static', filename='icon/Wheelchair-Friendly.webp') }}" alt="Wheelchair Friendly" width="30">
+                            <div>
+                                <input type="radio" id="wheelchair-friendly_available" name="amenities_wheelchair-friendly" value="available">
+                                <label for="wheelchair-friendly_available">Available</label>
+                            
+                                <input type="radio" id="wheelchair-friendly_paid" name="amenities_wheelchair-friendly" value="paid">
+                                <label for="wheelchair-friendly_paid">Paid</label>
+                            
+                                <input type="radio" id="wheelchair-friendly_not_available" name="amenities_wheelchair-friendly" value="not_available">
+                                <label for="wheelchair-friendly_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="wifi">WiFi</label>
+                            <img src="{{ url_for('static', filename='icon/Wi-Fi.webp') }}" alt="WiFi" width="30">
+                            <div>
+                                <input type="radio" id="wifi_available" name="amenities_wifi" value="available">
+                                <label for="wifi_available">Available</label>
+                            
+                                <input type="radio" id="wifi_paid" name="amenities_wifi" value="paid">
+                                <label for="wifi_paid">Paid</label>
+                            
+                                <input type="radio" id="wifi_not_available" name="amenities_wifi" value="not_available">
+                                <label for="wifi_not_available">Not Available</label>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-option">
+                            <label for="workstation">Workstation</label>
+                            <img src="{{ url_for('static', filename='icon/Workstation.webp') }}" alt="Workstation" width="30">
+                            <div>
+                                <input type="radio" id="workstation_available" name="amenities_workstation" value="available">
+                                <label for="workstation_available">Available</label>
+                            
+                                <input type="radio" id="workstation_paid" name="amenities_workstation" value="paid">
+                                <label for="workstation_paid">Paid</label>
+                            
+                                <input type="radio" id="workstation_not_available" name="amenities_workstation" value="not_available">
+                                <label for="workstation_not_available">Not Available</label>
+                            </div>
+                        </div>                                  
+                        
+
+                    </div>
+        
+                    <!-- Meal Options -->
+                    <div class="form-group">
+                        <label for="meal_images">Meal Options:</label>
+                        <input type="file" class="form-control-file" id="meal_images" name="meal_images" multiple>
+                        <textarea class="form-control" id="meal_description" name="meal_description" placeholder="Meal Description"></textarea>
+                    </div>
+
+                    <script>
+                        CKEDITOR.replace('meal_description');
+                    </script>
+        
+                    <!-- Rooms -->
+                    <div id="room-container">
+                        <h3>Rooms</h3>
+                        <button type="button" class="btn btn-primary" onclick="addRoom()">Add Room</button>
+                    </div>
+        
+                    <!-- FAQs -->
+                    <div id="faq-container">
+                        <h3>FAQs</h3>
+                        <button type="button" class="btn btn-primary" onclick="addFAQ()">Add FAQ</button>
+                    </div>
+
+                    <div id="review-container">
+                        <div class="review-entry">
+                            <div class="form-group">
+                                <label for="user_name">User Name</label>
+                                <input type="text" class="form-control" id="user_name" name="user_name[]" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">Comment</label>
+                                <textarea class="form-control" id="comment" name="comment[]" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="rating">Rating</label>
+                                <select class="form-control" id="rating" name="rating[]" required>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <button type="button" id="add-review" class="btn btn-secondary">Add Another Review</button>
+                        </div>
+                    </div>
+                    <script>
+                        document.getElementById('add-review').addEventListener('click', function() {
+                                const reviewContainer = document.getElementById('review-container');
+                                const reviewEntry = document.querySelector('.review-entry').cloneNode(true);
+                                reviewContainer.appendChild(reviewEntry);
+                            });
+                        function addRoom() {
+                            const roomContainer = document.getElementById('room-container');
+                            const roomIndex = document.querySelectorAll('.room-group').length;
+                            const roomGroup = document.createElement('div');
+                            roomGroup.className = 'room-group';
+                
+                            roomGroup.innerHTML = `
+                                <div class="form-group">
+                                    <label for="room_photos_${roomIndex}">Room Photo:</label>
+                                    <input type="file" class="form-control-file" id="room_photos_${roomIndex}" name="room_photos" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="room_descriptions_${roomIndex}">Room Description:</label>
+                                    <textarea class="form-control" id="room_descriptions_${roomIndex}" name="room_descriptions" required></textarea>
+                                </div>
+                            `;
+                            roomContainer.appendChild(roomGroup);
+                        }
+                
+                        function addFAQ() {
+                            const faqContainer = document.getElementById('faq-container');
+                            const faqIndex = document.querySelectorAll('.faq-group').length;
+                            const faqGroup = document.createElement('div');
+                            faqGroup.className = 'faq-group';
+                
+                            faqGroup.innerHTML = `
+                                <div class="form-group">
+                                    <label for="faq_question_${faqIndex}">Question ${faqIndex + 1}:</label>
+                                    <textarea class="form-control" id="faq_question_${faqIndex}" name="faq_question" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="faq_answer_${faqIndex}">Answer ${faqIndex + 1}:</label>
+                                    <textarea class="form-control" id="faq_answer_${faqIndex}" name="faq_answer" required></textarea>
+                                </div>
+                            `;
+                            faqContainer.appendChild(faqGroup);
+                        }
+                    </script>
+        
+                    <button type="submit" class="btn btn-success">Submit</button>
+
+                </form>
+            </div>
+            
+        </div>   
+
+    
+    <script>
+        var activeSection = null; // Variable to track the active section
+
+        function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            var content = document.getElementById("content");
+            if (sidebar.classList.contains("hidden")) {
+                sidebar.classList.remove("hidden");
+                content.classList.remove("minimized");
+            } else {
+                sidebar.classList.add("hidden");
+                content.classList.add("minimized");
+            }
+        }
+
+        function toggleSection(sectionId) {
+            var sections = document.querySelectorAll(".content > div");
+            sections.forEach(function (section) {
+                section.style.display = "none";
+            });
+
+            var section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = "block";
+                activeSection = section;
+            }
+        }
+
+
+        function clearSearch() {
+            document.getElementById('search_key').value = '';
+        }
+    </script>
+</body>
+</html>

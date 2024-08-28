@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Skygram Stays - Terms and Conditions
+{% endblock %}
+
+{% block content %}
+    <style>
+        .terms-content {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .terms-content .tcontainer {
+            margin: 0 auto;
+            padding: 20px;
+            opacity: 1;
+        }
+
+        .terms-content h1 {
+            font-size: 3rem;
+            text-align: center;
+            font-family: 'Baskerville', serif;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .terms-content h2 {
+            font-size: 2rem;
+            margin-top: 40px;
+            color: #444;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .terms-content h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            color: #555;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .terms-content p {
+            margin: 10px 0;
+            text-align: justify;
+            font-size: 1rem;
+        }
+
+        .terms-content h3 i {
+            margin-right: 10px;
+            color: #888;
+        }
+
+        .terms-content .leaf-top-left,
+        .terms-content .leaf-bottom-right {
+            position: fixed;
+            z-index: 10;
+            opacity: 0.4;
+        }
+
+        .terms-content .leaf-top-left {
+            top: 0;
+            left: 0;
+            transform: rotate(90deg);
+        }
+
+        .terms-content .leaf-bottom-right {
+            bottom: 0;
+            right: 0;
+        }
+
+        .footer-section {
+            background-color: #f5f5f5;
+            color: black;
+            padding: 40px 0;
+            font-family: 'Heebo', Arial, sans-serif;
+            flex: 1;
+            min-width: 250px;
+            width: 100%;
+        }
+
+        .footer-section .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        @media (max-width: 768px) {
+            .terms-content .tcontainer {
+                padding: 10px;
+            }
+
+            .terms-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .terms-content h2 {
+                font-size: 1.75rem;
+            }
+
+            .terms-content h3 {
+                font-size: 1.25rem;
+            }
+
+            .terms-content p {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+
+    <div class="terms-content">
+        <div class="tcontainer">
+            <h1>Skygram Stays</h1>
+            <h2>Terms and Conditions</h2>
+
+            <h3><i class="fas fa-calendar-alt"></i> General Booking Terms and Conditions</h3>
+            <p><strong>Check In/Out:</strong> Check-in is at 14:00 hours. If early check-in is required, please inform the property in advance. Check-out is at 11:00 hours. Late check-out charges of INR 3,000 per hour apply.</p>
+
+            <h3><i class="fas fa-smoking-ban"></i> Smoking Abuse and Drug Policy</h3>
+            <p>No smoking is allowed inside the property, including garages and bathrooms. Designated smoking areas include the outdoor patio, open sky terrace, and by the swimming pool. Any tobacco odor detected upon departure will incur additional cleaning and de-fumigation costs. Substance abuse is strictly prohibited, and any incidents will result in immediate eviction and forfeiture of the remaining paid rentals.</p>
+
+            <h3><i class="fas fa-tools"></i> Call Out Charges / Damage to Property</h3>
+            <p>Guests are responsible for callout fees if security alarms are triggered, or appliances/electronics are damaged or misused. These fees will be charged against the security deposit or credit card. Guests must maintain the property in good condition and report any damage immediately. Charges for repairs or replacements will be deducted from the security bond or credit card.</p>
+
+            <h3><i class="fas fa-exclamation-circle"></i> Penalties</h3>
+            <p>Excessive noise, illegal activity, or increased occupancy will result in a penalty of INR 10,000, immediate eviction, and forfeiture of remaining rentals. Use of the property for illegal purposes will result in a penalty of INR 20,000 and immediate eviction.</p>
+
+            <h3><i class="fas fa-paw"></i> Pets Policy</h3>
+            <p><strong>Pet Approval:</strong> Prior approval from villa management is required for pets. Reasonable pet fees or deposits may be applied. Pets must not be left alone at the property. Guests are liable for any damages caused by pets.</p>
+
+            <h3><i class="fas fa-swimmer"></i> Swimming Pool Usage</h3>
+            <p>The swimming pool is complimentary for all residents. Please follow safety guidelines and ensure children are supervised at all times. Diving and rough play are prohibited. Our company is not liable for any accidents or injuries in or around the pool area.</p>
+
+            <h3><i class="fas fa-shield-alt"></i> Arms and Ammunition</h3>
+            <p>No arms or ammunition are allowed on the premises. Licensed arms must be stationed outside the property.</p>
+
+            <h3><i class="fas fa-file-contract"></i> Terms and Conditions</h3>
+            <p>Complete the booking form with residential proof for all traveling passengers. If payment is not made on time, we reserve the right to cancel the booking. A confirmation invoice will be issued upon receipt of the booking form and deposit.</p>
+
+            <h3><i class="fas fa-times-circle"></i> Cancellations</h3>
+            <p>If canceled 15 days prior to check-in, a credit note will be issued. If canceled within 15 days, a 50% credit note will be issued. For cancellations within 3 days, the full tariff applies. In case of a country lockdown due to COVID-19, credit notes will be issued as per the cancellation period.</p>
+
+            <h3><i class="fas fa-home"></i> Property and Inventory Care</h3>
+            <p>Guests must maintain the property and its inventory. Any damages, breakages, or theft will result in deductions from the security deposit. The lessee is responsible for keeping the premises in the condition it was received.</p>
+        </div>
+    </div>
+{% endblock %}

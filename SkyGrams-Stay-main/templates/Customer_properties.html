@@ -1,0 +1,1225 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>All Properties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baskerville:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fafafa;
+            color: #222;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        .fcontainer {
+            position: relative;
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+
+        .floating-background-image {
+            position: absolute;
+            z-index: -1; 
+            opacity: 0.3;
+            pointer-events: none; 
+            width: 250px; 
+            height: auto;
+        }
+        
+        .floating-background-image.top-left {
+            top: 0;
+            left: 0;
+            transform: rotate(180deg); 
+        }
+        
+        .floating-background-image.bottom-right {
+            bottom: 0;
+            right: 0;
+        }
+
+        .main-content {
+            display: flex;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .filters {
+            width: 30%;
+            background: #f5f5f5;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-right: 10px;
+            position: sticky;
+            top: 20px;
+            box-sizing: border-box;
+            padding: 20px;
+            align-self: flex-start;
+            font-weight: 400;
+            font-size: 16px;
+            color: #222;
+        }
+
+        .properties {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .property-container {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            background: #f5f5f5;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            z-index: 10001;
+        }
+        
+        .popup-content input,
+        .popup-content button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        
+        .popup-content button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .popup-content button:hover {
+            background-color: #0056b3;
+        }
+        
+        .inline {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        
+        .inline label {
+            display: block;
+            width: 100%;
+            text-align: left;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .inline input {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close:hover {
+            color: #ff4d4d;
+        }
+        
+        .guest-box {
+            border: 1px solid #ccc;
+            padding: 12px;
+            margin: 10px 0;
+            cursor: pointer;
+            text-align: left;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .guest-box:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .guest-popup-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .guest-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .guest-item label {
+            flex-grow: 1;
+            text-align: left;
+            font-size: 16px;
+        }
+        
+        .guest-item div {
+            display: flex;
+            align-items: center;
+        }
+        
+        .guest-item div button {
+            width: 35px;
+            height: 35px;
+            border: 1px solid #ccc;
+            background: #fff;
+            color: #333;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .guest-item div button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .guest-item div input {
+            width: 60px;
+            text-align: center;
+            border: 1px solid #ddd;
+            background: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        
+        .guest-actions {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        
+        .guest-actions button {
+            padding: 12px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+        }
+        
+        .guest-actions button.apply {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+        
+        .guest-actions button.apply:hover {
+            background-color: #0056b3;
+        }
+        
+        .guest-actions button.clear {
+            background-color: white;
+            color: #333;
+            border: 1px solid #007bff;
+        }
+        
+        .guest-actions button.clear:hover {
+            background-color: #f1f1f1;
+        }        
+
+        .login-button-container {
+            position: relative;
+            display: inline-block;
+            margin-left: auto;
+        }
+
+        .user-icon {
+            position: relative;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 5px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f2f2f2;
+        }
+
+        .user-icon:hover .user-dropdown {
+            display: block;
+        }
+
+        
+        .filters h1 {
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .filters label {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
+            display: block;
+        }
+        
+        .filters input[type="number"],
+        .filters select,
+        .filters input[type="checkbox"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease-in-out;
+        }
+        
+        .filters input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .filters input[type="number"]:focus,
+        .filters select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        
+        .filters .amenities-toggle {
+            cursor: pointer;
+            background-color: #f8f8f8;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        
+        .filters .amenities-container {
+            display: none;
+            max-height: 180px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 8px;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+        
+        .filters .filter-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .filters .filter-actions button,
+        .filters .filter-actions a {
+            width: 48%;
+            padding: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .filters .filter-actions button {
+            background-color: #007bff;
+        }
+        
+        .filters .filter-actions button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        
+        .filters .filter-actions a {
+            background-color: #dc3545;
+            text-decoration: none;
+        }
+        
+        .filters .filter-actions a:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+        
+        .filters .hamburger {
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 15px;
+            display: block;
+            color: #333;
+        }        
+
+        .properties h1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .property-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .property-image {
+            position: relative;
+            flex-shrink: 0;
+            width: 100%;
+            max-width: 300px;
+            height: 250px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .property-details {
+            flex: 1;
+            padding: 0 20px;
+        }
+
+        .property-title {
+            font-size: 28px;
+            font-weight: 550;
+            margin-bottom: 10px;
+            font-family: 'Baskerville', serif;
+
+        }
+
+        .property-location {
+            display: flex;
+            align-items: center;
+            color: gray;
+            margin-bottom: 10px;
+        }
+
+        .property-location i {
+            margin-right: 5px;
+        }
+
+        .property-info {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .property-info div {
+            margin-right: 15px;
+            border-right: 1px solid #ddd;
+            padding-right: 10px;
+        }
+
+        .property-info div:last-child {
+            border-right: none;
+        }
+
+        .property-great-for {
+            padding-bottom: 10px; 
+        }
+
+        .property-amenities span {
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .property-price-view {
+            text-align: right;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-top: 30px;
+        }
+        
+        .property-price {
+            font-size: 26px; /* Slightly larger for emphasis */
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .property-view a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #2e7d32; /* Forest green */
+            color: white;
+            border: 1px solid #2e7d32;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            font-weight: bold;
+        }
+        
+        .property-view a:hover {
+            background-color: white; /* Softer green on hover */
+            color: #2e7d32; /* Forest green text */
+            border: 1px solid #2e7d32;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }        
+             
+        .heart-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #fff;
+            color: #e74c3c;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: color 0.3s, background-color 0.3s, transform 0.3s;
+            z-index: 1;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            border: 2px solid #ddd;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+        
+        .heart-icon.clicked {
+            background-color: #e74c3c;
+            color: #fff;
+            transform: scale(1.1);
+        }
+        
+        .luxury-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: gold;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .property-amenities {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            gap: 20px;
+        }
+
+        .property-amenities img {
+            width: 50px;
+            height: 50px;
+        }       
+
+        .property-amenities .more-amenities {
+            display: inline-block;
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 0;
+            background: none;
+            border: none;
+            font-size: 14px;
+            margin-top: 8px;
+        }       
+
+        .action-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .action-links a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .action-links a:hover {
+            background-color: #333;
+            transform: scale(1.05);
+        }
+
+        .action-links .add-property,
+        .action-links .view-favorites {
+            border: none;
+            background-color: transparent;
+            color: #000;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .action-links .add-property {
+            color: #007bff;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+        }
+
+        .action-links .view-favorites {
+            color: #dc3545;
+            border: 2px dashed #dc3545;
+            border-radius: 5px;
+        }
+
+        .action-links .add-property:hover,
+        .action-links .view-favorites:hover {
+            transform: scale(1.05);
+            background-color: #f8f9fa;
+        }
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+        
+            .fcontainer {
+                padding: 0;
+            }
+        
+            .main-content {
+                flex-direction: column;
+            }
+        
+            .filters {
+                display: none; 
+            }
+        
+            .property-container {
+                flex-direction: column;
+            }
+        
+            .property-image {
+                width: 100%;
+                height: 200px;
+                margin-bottom: 15px;
+            }
+        
+            .property-details {
+                padding: 0;
+            }
+        
+            .property-title {
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+        
+            .property-info {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                flex-wrap: wrap;
+                border-top: 1px solid #ddd;
+                padding-top: 10px;
+            }
+        
+            .property-info div {
+                flex: 1;
+                text-align: center;
+                margin-right: 0;
+                padding-right: 0;
+                border-right: 1px solid #ddd;
+            }
+        
+            .property-info div:last-child {
+                border-right: none;
+            }
+        
+            .property-great-for,
+            .property-amenities {
+                margin-top: 15px;
+            }
+        
+            .property-price-view {
+                width: 100%;
+                padding: 15px 0;
+                margin-top: 15px;
+            }
+        
+            .property-price {
+                font-size: 22px;
+                margin-bottom: 8px;
+            }
+        
+            .property-view a {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+                font-size: 16px;
+            }
+        
+            .heart-icon {
+                top: 5px;
+                right: 5px;
+                width: 30px;
+                height: 30px;
+                font-size: 18px;
+            }
+        
+            .luxury-tag {
+                top: 5px;
+                left: 5px;
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+        
+            /* Guest Info Popup Styling */
+            .popup-content {
+                width: 95%;
+                padding: 20px;
+                max-width: 350px;
+                max-height: 80vh;
+                overflow-y: auto;
+                margin-top: 20px;
+                background-color: #f9f9f9;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+        
+            .popup-content h2 {
+                font-size: 18px;
+                margin-bottom: 20px;
+                color: #333;
+            }
+        
+            .popup-content input,
+            .popup-content button {
+                font-size: 14px;
+                padding: 10px;
+                margin-bottom: 15px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                box-sizing: border-box;
+            }
+        
+            .popup-content button {
+                background-color: #007bff;
+                color: #fff;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+        
+            .popup-content button:hover {
+                background-color: #0056b3;
+            }
+        
+            .inline {
+                flex-direction: column;
+            }
+        
+            .inline label {
+                margin-bottom: 5px;
+            }
+        
+            .inline input {
+                margin-bottom: 15px;
+            }
+        
+            .guest-box {
+                padding: 10px;
+                margin: 15px 0;
+                background-color: #f1f1f1;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+            }
+        
+            .guest-item {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 15px;
+            }
+        
+            .guest-item div {
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+            }
+        
+            .guest-item div button {
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+                margin: 0 5px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+        
+            .guest-item div button:hover {
+                background-color: #0056b3;
+            }
+        
+            .guest-item div input {
+                width: 40px;
+                text-align: center;
+                font-size: 16px;
+                border: none;
+                background-color: #f9f9f9;
+            }
+        
+            .guest-actions {
+                flex-direction: column;
+            }
+        
+            .guest-actions button {
+                width: 100%;
+                margin-top: 10px;
+                padding: 10px;
+            }
+        
+            .filters h1 {
+                font-size: 18px;
+            }
+        
+            .filters label {
+                font-size: 12px;
+            }
+        
+            .filters input[type="number"],
+            .filters select,
+            .filters input[type="checkbox"] {
+                font-size: 14px;
+                padding: 6px;
+            }
+        
+            .filters .filter-actions {
+                flex-direction: column;
+            }
+        
+            .filters .filter-actions button,
+            .filters .filter-actions a {
+                width: 100%;
+                margin-top: 10px;
+                font-size: 14px;
+                padding: 8px;
+            }
+        
+            .action-links {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        
+            .action-links a {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+        
+            .action-links .add-property,
+            .action-links .view-favorites {
+                margin-top: 10px;
+                padding: 8px;
+            }
+
+            .view-favorites {
+                display: none; 
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="fcontainer">
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close" onclick="closePopup()">&times;</span>
+                <h2>Guest Information</h2>
+                <form id="infoForm" action="{{ url_for('submit') }}" method="post">
+                    <input type="text" id="name" name="name" placeholder="Name" required>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <input type="tel" id="mobile" name="mobile" placeholder="Mobile" required>
+                    <input type="text" id="place" name="place" placeholder="Place to Visit" required>
+                    <div class="inline">
+                        <div>
+                            <label for="checkin">Check-in Date</label>
+                            <input type="date" id="checkin" name="checkin" required>
+                        </div>
+                        <div>
+                            <label for="checkout">Check-out Date</label>
+                            <input type="date" id="checkout" name="checkout" required>
+                        </div>
+                    </div>
+                    <div id="guestBox" class="guest-box" onclick="openGuestForm()">Guests: 02 adults & 00 children</div>
+                    <button type="submit">Submit</button>
+                    <input type="hidden" id="guest_adults" name="guest_adults" value="02">
+                    <input type="hidden" id="guest_children" name="guest_children" value="00">
+                    <input type="hidden" id="guest_infants" name="guest_infants" value="00">
+                </form>
+            </div>
+        </div>
+        
+        <div id="guestPopup" class="popup">
+            <div class="popup-content guest-popup-content">
+                <span class="close" onclick="closeGuestForm()">&times;</span>
+                <h2>Guests Information</h2>
+                <div class="guest-item">
+                    <label for="adults">Adults<br><span style="font-size: 12px;">Age 13 years and more</span></label>
+                    <div>
+                        <button type="button" onclick="changeGuestCount('adults', -1)">-</button>
+                        <input type="text" id="adults" name="adults" value="02" readonly>
+                        <button type="button" onclick="changeGuestCount('adults', 1)">+</button>
+                    </div>
+                </div>
+                <div class="guest-item">
+                    <label for="children">Children<br><span style="font-size: 12px;">Age 3-12 years</span></label>
+                    <div>
+                        <button type="button" onclick="changeGuestCount('children', -1)">-</button>
+                        <input type="text" id="children" name="children" value="00" readonly>
+                        <button type="button" onclick="changeGuestCount('children', 1)">+</button>
+                    </div>
+                </div>
+                <div class="guest-item">
+                    <label for="infants">Infants<br><span style="font-size: 12px;">Age 0-2 years</span></label>
+                    <div>
+                        <button type="button" onclick="changeGuestCount('infants', -1)">-</button>
+                        <input type="text" id="infants" name="infants" value="00" readonly>
+                        <button type="button" onclick="changeGuestCount('infants', 1)">+</button>
+                    </div>
+                </div>
+                <div class="guest-actions">
+                    <button type="button" class="clear" onclick="clearGuestInfo()">Clear</button>
+                    <button type="button" class="apply" onclick="applyGuestInfo()">Apply</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="fcontainer">
+            <div class="main-content">
+                <div class="filters" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; margin: 0 auto 20px; box-sizing: border-box;">
+                    <div class="hamburger" onclick="toggleFilters()" style="font-size: 20px; font-weight: bold; cursor: pointer; margin-bottom: 15px; display: block; color: #333;">☰ Filters</div>
+                    <form method="GET" action="{{ url_for('Customer_properties') }}">
+                        <img src="{{ url_for('static', filename='img/leaf.jpg') }}" class="floating-background-image bottom-right" alt="Bottom Right Image">
+                        <div style="margin-bottom: 15px;">
+                            <label style="font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #333; display: block;">Price Range:</label>
+                            <div style="margin-bottom: 5px;">
+                                <label for="price_0_10k" style="font-size: 14px;">
+                                    <input type="checkbox" id="price_0_10k" name="price_range" value="0-10000" {% if '0-10000' in request.args.getlist('price_range') %}checked{% endif %}> ₹0 - ₹10,000
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 5px;">
+                                <label for="price_10k_25k" style="font-size: 14px;">
+                                    <input type="checkbox" id="price_10k_25k" name="price_range" value="10001-25000" {% if '10001-25000' in request.args.getlist('price_range') %}checked{% endif %}> ₹10,001 - ₹25,000
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 5px;">
+                                <label for="price_25k_50k" style="font-size: 14px;">
+                                    <input type="checkbox" id="price_25k_50k" name="price_range" value="25001-50000" {% if '25001-50000' in request.args.getlist('price_range') %}checked{% endif %}> ₹25,001 - ₹50,000
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 5px;">
+                                <label for="price_50k_75k" style="font-size: 14px;">
+                                    <input type="checkbox" id="price_50k_75k" name="price_range" value="50001-75000" {% if '50001-75000' in request.args.getlist('price_range') %}checked{% endif %}> ₹50,001 - ₹75,000
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 5px;">
+                                <label for="price_75k_100k" style="font-size: 14px;">
+                                    <input type="checkbox" id="price_75k_100k" name="price_range" value="75001-100000" {% if '75001-100000' in request.args.getlist('price_range') %}checked{% endif %}> ₹75,001 - ₹100,000
+                                </label>
+                            </div>
+                        </div>
+        
+                        <!-- Price Range Inputs -->
+                        <label for="min_price" style="font-size: 14px; font-weight: 600; margin-bottom: 5px; color: #333;">Min Price:</label>
+                        <input type="number" id="min_price" name="min_price" value="{{ request.args.get('min_price', '') }}" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                        
+                        <label for="max_price" style="font-size: 14px; font-weight: 600; margin-bottom: 5px; color: #333;">Max Price:</label>
+                        <input type="number" id="max_price" name="max_price" value="{{ request.args.get('max_price', '') }}" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                        
+                        <!-- Room Count -->
+                        <label for="room_count" style="font-size: 14px; font-weight: 600; margin-bottom: 5px; color: #333;">Room Count:</label>
+                        <input type="number" id="room_count" name="room_count" value="{{ request.args.get('room_count', '') }}" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                        
+                       <!-- Amenities Checkboxes -->
+                       <label for="wifi">Wi-Fi</label>
+                       <input type="checkbox" id="wifi" name="amenities" value="Wi-Fi" {% if 'Wi-Fi' in request.args.getlist('amenities') %}checked{% endif %}>
+                       <label for="tv">TV</label>
+                       <input type="checkbox" id="tv" name="amenities" value="TV" {% if 'TV' in request.args.getlist('amenities') %}checked{% endif %}>
+        
+                        <!-- Submit and Reset Buttons -->
+                        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                            <button type="submit" style="width: 48%; padding: 10px; font-size: 14px; font-weight: 600; color: white; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, transform 0.3s;">Apply Filter</button>
+                            <a href="{{ url_for('Customer_properties') }}" style="width: 48%; padding: 10px; font-size: 14px; font-weight: 600; color: white; background-color: #dc3545; text-align: center; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, transform 0.3s;">Reset</a>
+                        </div>
+                    </form>
+                </div>
+        
+                <div class="properties">
+                    <h1>All Properties
+                        <a href="{{ url_for('favorites') }}" class="view-favorites"><i class="fas fa-heart"></i> View Favorites</a>
+                    </h1>
+                    {% for property in properties %}
+                    <div class="property-container" onclick="window.location.href='{{ url_for('villa', property_id=property.id) }}';">
+                        <div class="property-image">
+                            <div class="luxury-tag">Luxury</div>
+                            <img src="{{ url_for('static', filename='uploads/' ~ property.cover_photo) }}" alt="Cover Photo">
+                        </div>
+                        <div class="property-details">
+                            <div class="property-title">{{ property.property_name }}</div>
+                            <div class="heart-icon" onclick="toggleFavorite(event, {{ property.id }})">♡</div>
+                                <div class="property-location">
+                                <i class="bi bi-geo-alt"></i>{{ property.location }}
+                            </div>
+                            <div class="property-info">
+                                <div>Upto {{ property.guest_capacity }} Guests</div>
+                                <div>{{ property.room_count }} Rooms</div>
+                                <div>{{ property.baths }} Baths</div>
+                            </div>
+                            <hr>
+                            <div class="property-great-for">
+                                Great for:
+                                {% for item in property.great_for %}
+                                    <span style="letter-spacing: -0.25em;">{{item}}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="property-amenities">
+                                {% for amenity in property.amenities[:4] %}
+                                    <img src="{{ url_for('static', filename=amenity.icon) }}" alt="{{ amenity.name }}">
+                                {% endfor %}
+                                {% if property.amenities|length > 4 %}
+                                    <div class="more-amenities">+more</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="property-price-view">
+                            <div class="property-price">₹{{ property.price }}</div>
+                            <div class="property-view">
+                                <a href="{{ url_for('villa', property_id=property.id) }}">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            window.onload = function() {
+                document.getElementById('popup').style.display = 'flex';
+                var today = new Date().toISOString().split('T')[0];
+                document.getElementById('checkin').setAttribute('min', today);
+                document.getElementById('checkout').setAttribute('min', today);
+            };
+            
+            function closePopup() {
+                document.getElementById('popup').style.display = 'none';
+            }
+            
+            function openGuestForm() {
+                document.getElementById('guestPopup').style.display = 'flex';
+            }
+            
+            function closeGuestForm() {
+                document.getElementById('guestPopup').style.display = 'none';
+            }
+            
+            function changeGuestCount(type, value) {
+                var element = document.getElementById(type);
+                var currentValue = parseInt(element.value) || 0;
+                var newValue = currentValue + value;
+                if (newValue >= 0) {
+                    element.value = newValue.toString().padStart(2, '0');
+                }
+            }
+            
+            function applyGuestInfo() {
+                var adults = document.getElementById('adults').value;
+                var children = document.getElementById('children').value;
+                var infants = document.getElementById('infants').value;
+            
+                document.getElementById('guest_adults').value = adults;
+                document.getElementById('guest_children').value = children;
+                document.getElementById('guest_infants').value = infants;
+            
+                var guestText = `${adults} adults`;
+                if (children > 0) {
+                    guestText += ` & ${children} children`;
+                }
+                document.getElementById('guestBox').textContent = `Guests: ${guestText}`;
+            
+                closeGuestForm();
+            }
+            
+            function clearGuestInfo() {
+                document.getElementById('adults').value = '0';
+                document.getElementById('children').value = '0';
+                document.getElementById('infants').value = '0';
+                document.getElementById('guest_adults').value = '0';
+                document.getElementById('guest_children').value = '0';
+                document.getElementById('guest_infants').value = '0';
+                document.getElementById('guestBox').textContent = 'Guests';
+            }
+            
+            document.getElementById('infoForm').onsubmit = function(event) {
+                event.preventDefault();
+                fetch('{{ url_for("submit") }}', {
+                    method: 'POST',
+                    body: new FormData(this)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        document.querySelector('.popup-content').innerHTML = '<h2>Thank you for your information!</h2>';
+                        setTimeout(() => {
+                            closePopup();
+                        }, 2000);
+                    } else {
+                        alert('There was an error submitting the form.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error submitting the form.');
+                });
+            };
+            
+            function toggleFavorite(event, propertyId) {
+                event.stopPropagation();
+                const heartIcon = event.currentTarget;
+                heartIcon.classList.toggle('clicked');
+                fetch('/toggle-favorite', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ property_id: propertyId }),
+                });
+            }
+    
+            function updatePriceValue(value) {
+                document.getElementById('priceValue').textContent = `₹${value}`;
+            }
+            
+            function applyFilters() {
+                const selectedPriceRanges = Array.from(document.querySelectorAll('input[name="price_range"]:checked')).map(el => el.value);
+                const amenities = Array.from(document.querySelectorAll('input[name="amenities"]:checked')).map(el => el.value);
+                const rooms = document.getElementById('room_count').value;
+    
+                // Logic to filter properties based on the selected criteria
+                let filteredProperties = properties.filter(property => {
+                    const priceInSelectedRange = selectedPriceRanges.some(range => {
+                        const [minRange, maxRange] = range.split('-').map(Number);
+                        return property.price >= minRange && property.price <= maxRange;
+                    });
+                    return priceInSelectedRange &&
+                        amenities.every(amenity => property.amenities.includes(amenity)) &&
+                        property.room_count >= rooms;
+                });
+    
+                displayProperties(filteredProperties);
+            }
+    
+            function removeFilters() {
+                document.querySelectorAll('input[name="price_range"]').forEach(el => el.checked = false);
+                document.getElementById('min_price').value = '';
+                document.getElementById('max_price').value = '';
+                document.querySelectorAll('input[name="amenities"]').forEach(el => el.checked = false);
+                document.getElementById('room_count').value = '';
+    
+                // Display all properties again
+                displayProperties(properties);
+            }
+    
+            function toggleFilters() {
+                document.querySelector('.filters').classList.toggle('show');
+            }
+    
+        </script>
+    {% endblock %}
+</body>
+</html>

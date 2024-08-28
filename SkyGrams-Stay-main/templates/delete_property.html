@@ -1,0 +1,33 @@
+<!-- templates/delete_property.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Property</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Delete Property</h1>
+    <form action="{{ url_for('delete_property') }}" method="POST">
+        <div class="form-group">
+            <label for="property_id">Select Property to Delete:</label>
+            <select name="property_id" id="property_id" class="form-control">
+                {% for property in properties %}
+                    <option value="{{ property.id }}">{{ property.property_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

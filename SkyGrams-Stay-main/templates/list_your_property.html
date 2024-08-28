@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villa Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <style>
+        /* Custom font for headings */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Open+Sans:wght@400;600&display=swap');
+
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #556B2F;
+            --text-color: #333;
+            --heading-font: 'Roboto', sans-serif;
+            --body-font: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--body-font);
+            color: var(--text-color);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--heading-font);
+            color: var(--text-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .card {
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .highlight-first-letter::first-letter {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-color: var(--primary-color);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .background-image {
+            background-image: url('{{ url_for("static", filename="02.jpg") }}');
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            color: var(--text-color);
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slider {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: auto;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .navigation {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .navigation button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .review {
+            text-align: center;
+            padding: 20px;
+        }
+        .info-text {
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .property-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px;
+            text-align: center;
+        }
+        .property-box img {
+            max-width: 100%;
+            height: auto;
+        }
+        .card img {
+            max-width: 100%;
+            height: auto;
+        }
+        .form-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .form-control::placeholder {
+            color: transparent;
+        }
+        .form-control:placeholder-shown:not(:focus)~label {
+            font-size: 100%;
+            cursor: text;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .form-control:not(:placeholder-shown)~label,
+        .form-control:focus~label {
+            font-size: 75%;
+            top: 0;
+            transform: translateY(-100%);
+            transition: all 0.2s ease-in-out;
+        }
+        label {
+            position: absolute;
+            top: 0;
+            left: 15px;
+            pointer-events: none;
+            transition: all 0.2s ease-in-out;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0 5px;
+        }
+        .additional-content {
+            background-color: #f9f9f9;
+            padding: 50px 0;
+        }
+        .additional-content .row {
+            margin-bottom: 30px;
+        }
+        .additional-content h2 {
+            font-size: 1.75rem;
+            margin-bottom: 20px;
+        }
+        .additional-content p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        .additional-content img {
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+        }
+        .faq-section {
+            padding: 50px 0;
+        }
+        .faq-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .card-header button {
+            width: 100%;
+            text-align: left;
+            padding: 15px;
+            font-size: 1.1rem;
+            background-color: #f8f9fa;
+            border: none;
+            outline: none;
+            transition: background-color 0.3s ease;
+            color: black; 
+        }
+        .card-header button:hover {
+            background-color: #e2e6ea;
+        }
+        .card-header button:focus {
+            box-shadow: none;
+        }
+        .card-body {
+            padding: 20px;
+            background-color: #fff;
+        }
+        .reviews-container {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .reviews-container .row {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+        .reviews-container .col-md-4 {
+            flex: 0 0 auto;
+            margin-right: 15px;
+        }
+        .review-text {
+            text-align: center;
+            white-space: normal;
+        }
+        .reviews-container .card {
+            border: 2px solid var(--secondary-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .background-image {
+                height: auto;
+                padding: 20px;
+            }
+        
+            .form-container {
+                width: 100%;
+                padding: 15px;
+                border-radius: 10px;
+                margin: 0 15px; 
+            }
+        
+            .form-row {
+                flex-direction: column; 
+            }
+        
+            .form-group {
+                margin-bottom: 15px; 
+            }
+        
+            .form-group.col-md-6 {
+                width: 100%; 
+            }
+        
+            .form-control {
+                font-size: 14px;
+                padding: 10px;
+            }
+        
+            h1 {
+                font-size: 1.5rem; 
+                text-align: center;
+            }
+        
+            .btn-primary {
+                font-size: 16px; 
+                padding: 10px;
+            }
+        
+            .info-text {
+                font-size: 18px; 
+                padding: 10px;
+                margin: 0;
+                text-align: center;
+            }
+        }
+        
+    </style>
+    <script>
+        function showThankYouMessage() {
+            alert("Thank you for sharing your details. Our authority will get back to you soon.");
+        }
+
+        function toggleProperties() {
+            var x = document.getElementById("propertyList");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="background-image container-fluid">
+        <div class="row">
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="info-text text-center">
+                    Maximise the Success of Your<br>
+                    Holiday Home with SkyGram Stays:<br>
+                    A Partnership of Trust
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="form-container">
+                    <h1 class="mb-4">Tell us more about your house</h1>
+                    <form method="POST" enctype="multipart/form-data" onsubmit="showThankYouMessage()">
+                        {{ form.hidden_tag() }}
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.first_name(class="form-control", placeholder="First Name", aria_label="First Name") }}
+                                {{ form.first_name.label(class="form-label", for="first_name") }}
+                                {% if form.first_name.errors %}
+                                <div class="text-danger">{{ form.first_name.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.last_name(class="form-control", placeholder="Last Name", aria_label="Last Name") }}
+                                {{ form.last_name.label(class="form-label", for="last_name") }}
+                                {% if form.last_name.errors %}
+                                <div class="text-danger">{{ form.last_name.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.email(class="form-control", placeholder="Email ID") }}
+                                {{ form.email.label(class="form-label") }}
+                                {% if form.email.errors %}
+                                <div class="text-danger">{{ form.email.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.phone(class="form-control", placeholder="Mobile Phone") }}
+                                {{ form.phone.label(class="form-label") }}
+                                {% if form.phone.errors %}
+                                <div class="text-danger">{{ form.phone.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.location(class="form-control", placeholder="Select your property location") }}
+                            {{ form.location.label(class="form-label") }}
+                            {% if form.location.errors %}
+                            <div class="text-danger">{{ form.location.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.property_type(class="form-control", placeholder="What type of property is it?") }}
+                            {{ form.property_type.label(class="form-label") }}
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.rooms(class="form-control", placeholder="How many rooms?") }}
+                                {{ form.rooms.label(class="form-label") }}
+                                {% if form.rooms.errors %}
+                                <div class="text-danger">{{ form.rooms.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.heard_about(class="form-control", placeholder="Where did you hear about us?") }}
+                                {{ form.heard_about.label(class="form-label") }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.photos(class="form-control", placeholder="Photos/Website link (if any)", accept='image/*') }}
+                            {{ form.photos.label(class="form-label") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.link(class="form-control", placeholder="Link (optional)") }}
+                            {{ form.link.label(class="form-label") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.description(class="form-control", placeholder="Describe your property") }}
+                            {{ form.description.label(class="form-label") }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send a request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if first_photo %}
+    <div class="card mt-3" style="width: 18rem;">
+        <img src="{{ url_for('static', filename='02.jpg') }}" class="card-img-top" alt="First Photo">
+        <div class="card-body">
+            <h5 class="card-title">First Photo</h5>
+            <p class="card-text">Villa ID: {{ first_photo.villa_id }}</p>
+            <p class="card-text">Filename: {{ first_photo.filename }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="container mt-5">
+        <h2 class="text-center">Owner Reviews</h2>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-5">
+                <div class="card" style="height: 100%;">
+                    <img src="{{ url_for('static', filename='02.jpg') }}" class="card-img-top" alt="Review Image 1">
+                    <div class="card-body">
+                        <div class="review-text">
+                            "We had a superb experience with Skygram Stays.They were proactive and enthusiastic from the start. The onboarding process was straightforward and comfortable. It was our first time renting out our villa, and Team Skygram was patient, ensuring the villa was treated with care and professionalism by guests. We are very happy with how well they maintain the villa as well."
+                            <br><br>
+                            <div class="text-right">
+                                Mr. Gunwant Palesha<br>
+                                SkyGram Mojay, Panchgani
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card" style="height: 100%;">
+                    <img src="{{ url_for('static', filename='02.jpg') }}" class="card-img-top" alt="Review Image 2">
+                    <div class="card-body">
+                        <div class="review-text">
+                            "I've been affiliated with Skygram Stays for about a year now, and these young professionals have generated great revenue for my villa. Their responses are always prompt, they are very professional to work with, and I would highly recommend them to other villa owners."
+                            <br><br><br><br>
+                            <div class="text-right">
+                                Mr. Mehul Dhakkan<br>
+                                SkyGram Kuber, Lonavala
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container additional-content mt-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2 class="highlight-first-letter">Welcome to SkyGram Stays
+                    </h2>
+                <p>As we open the doors to a world of possibilities, every house at SkyGram Stays transforms into a haven, and every journey is an unforgettable one.</p>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="{{ url_for('static', filename='02.jpg') }}" alt="Sample Image" class="img-fluid">
+            </div>
+        </div>
+        <div class="row align-items-center mt-4">
+            <div class="col-md-6 text-center">
+                <img src="{{ url_for('static', filename='02.jpg') }}" alt="Sample Image" class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <h2 class="highlight-first-letter">Your Path to Hospitality Success
+                    </h2>
+                <p>SkyGram Stays is a sharing economy business that helps both home owners and frequent travellers.</p>
+            </div>
+        </div>
+        <div class="row align-items-center mt-4">
+            <div class="col-md-6">
+                <h2 class="highlight-first-letter">Two pillars serve as the foundation of our services
+                    </h2>
+                <p>Our commitment to excellence and our passion for hospitality. By listing your home with us, you become a member of a community that values exceptional experiences, trust and peace of mind.</p>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="{{ url_for('static', filename='02.jpg') }}" alt="Sample Image" class="img-fluid">
+            </div>
+        </div>
+
+        <div class="container faq-section mt-5">
+            <h2>F.A.Q.</h2>
+            <div id="faqAccordion">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                What is SkyGram Stays?
+                                <span class="float-right">&#x25BC;</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
+                        <div class="card-body">
+                            SkyGram Stays is a platform that helps property owners rent out their holiday homes with ease and efficiency.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                How do I list my property?
+                                <span class="float-right">&#x25BC;</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
+                        <div class="card-body">
+                            You can list your property by filling out the form on this page and submitting the required details.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                What are the benefits of using SkyGram Stays?
+                                <span class="float-right">&#x25BC;</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree">
+                        <div class="card-body">
+                            SkyGram Stays offers professional support, marketing, and management services to maximize your rental income and minimize your stress.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingFour">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                How much does it cost to list my property?
+                                <span class="float-right">&#x25BC;</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour">
+                        <div class="card-body">
+                            Listing your property on SkyGram Stays is free. We charge a commission only when your property is booked.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingFive">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                How do I get paid?
+                                <span class="float-right">&#x25BC;</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive">
+                        <div class="card-body">
+                            Payments are processed securely and transferred to your bank account after each booking.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingSix">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                Can I manage my property listing?
+                                <span class="float-right">&#x25BC;</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix">
+                        <div class="card-body">
+                            Yes, you can manage your property listing, update details, and view bookings through your SkyGram Stays account.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingSeven">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                What if I need to cancel a booking?
+                                <span class="float-right">&#x25BC;</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven">
+                        <div class="card-body">
+                            If you need to cancel a booking, please contact our support team as soon as possible. Cancellation policies may apply.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingEight">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                How do I contact SkyGram Stays support?
+                                <span class="float-right">&#x25BC;</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseEight" class="collapse" aria-labelledby="headingEight">
+                        <div class="card-body">
+                            You can contact our support team via email at support@skygramstays.com or call us at +91 9226784221.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingNine">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                Can I list multiple properties?
+                                <span class="float-right">&#x25BC;</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseNine" class="collapse" aria-labelledby="headingNine">
+                        <div class="card-body">
+                            Yes, you can list multiple properties on SkyGram Stays. Each property will have its own listing and details.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTen">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                                What are the requirements for listing a property?
+                                <span class="float-right">&#x25BC;</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTen" class="collapse" aria-labelledby="headingTen">
+                        <div class="card-body">
+                            Your property must meet our quality standards and safety requirements. Our team will review your listing before it goes live.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+    <script>
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            const slides = document.querySelector('.slides');
+            const totalSlides = slides.children.length;
+            if (index >= totalSlides) {
+                currentIndex = 0;
+            } else if (index < 0) {
+                currentIndex = totalSlides - 1;
+            } else {
+                currentIndex = index;
+            }
+            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.next').addEventListener('click', () => {
+                showSlide(currentIndex + 1);
+            });
+
+            document.querySelector('.prev').addEventListener('click', () => {
+                showSlide(currentIndex - 1);
+            });
+        });
+
+        function toggleProperties() {
+            const propertyList = document.getElementById('propertyList');
+            if (propertyList.style.display === 'none' || propertyList.style.display === '') {
+                propertyList.style.display = 'block';
+            } else {
+                propertyList.style.display = 'none';
+            }
+        }
+
+        function showThankYouMessage() {
+            alert("Thank you for submitting the form!");
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
