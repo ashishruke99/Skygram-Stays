@@ -13,7 +13,11 @@ import psycopg2
 from flask_mail import Mail, Message
 from sqlalchemy import or_
 
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
+from dotenv import load_dotenv
+load_dotenv()
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///customer_villa.db'
@@ -28,9 +32,11 @@ app.config['MAIL_USERNAME'] = 'info@skygramstays.in'
 app.config['MAIL_PASSWORD'] = 'qnke arqv wawn rant'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 mail = Mail(app)
-
+db = SQLAlchemy()  # Initialize SQLAlchemy
+db.init_app(app)    # Bind SQLAlchemy to Flask app
 #Creating Data Base
 def init_db():
     with app.app_context():
