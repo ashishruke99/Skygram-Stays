@@ -12,7 +12,7 @@ import razorpay
 import psycopg2
 from flask_mail import Mail, Message
 from sqlalchemy import or_
-
+from flask_migrate import Migrate
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
