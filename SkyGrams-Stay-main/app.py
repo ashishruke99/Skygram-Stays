@@ -31,7 +31,6 @@ app.config['MAIL_PASSWORD'] = 'qnke arqv wawn rant'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 mail = Mail(app)
 db = SQLAlchemy()  # Initialize SQLAlchemy
 db.init_app(app)    # Bind SQLAlchemy to Flask app
