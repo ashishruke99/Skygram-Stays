@@ -2,93 +2,233 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baskerville:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Arial', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background-color: #f5f5f5;
+        }
+        .tcontainer {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            max-width: 1200px;
+        }
         .form-box {
-            width: 300px;
-            margin: 100px auto;
-            padding: 30px;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 65%;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transform: scale(0.9);
+            animation: scaleUp 0.5s forwards;
+            position: relative;
+            z-index: 1;
+        }
+        .slideshow {
+            width: 35%;
+            overflow: hidden;
+            position: relative;
+        }
+        .slideshow img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            animation: slideshow 15s linear infinite;
+        }
+        .slideshow img:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .slideshow img:nth-child(2) {
+            animation-delay: 5s;
+        }
+        .slideshow img:nth-child(3) {
+            animation-delay: 10s;
+        }
+        @keyframes slideshow {
+            0% {
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            33.33% {
+                opacity: 1;
+            }
+            53.33% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
             text-align: center;
+            margin-bottom: 20px;
+            font-weight: 400;
+            font-family: 'Baskerville', serif;
         }
-        .form-box input {
-            width: 90%;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        .form-box button {
+        .form-group {
+            flex: 1;
+            min-width: calc(50% - 20px);
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #555;
+            transition: color 0.3s;
+        }
+        .form-group input {
             width: 100%;
             padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        .form-group input:focus + label {
+            color: #4CAF50;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
             background-color: #4CAF50;
             color: white;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
-            margin-bottom: 10px;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
-        .form-box button:hover {
+        .btn-submit:hover {
             background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            width: 100%;
+            padding: 15px;
+            background-color: #ddd;
+            color: #333;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #ccc;
+            transform: translateY(-2px);
         }
         .error {
             color: red;
+            text-align: center;
+            margin-bottom: 10px;
         }
         .success {
             color: green;
+            text-align: center;
+            margin-bottom: 10px;
         }
-        /* Media Queries for Mobile Responsiveness */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
             .form-box {
                 width: 100%;
+                max-width: none;
                 margin: 20px;
-                padding: 20px;
             }
-            .form-box input {
+            .slideshow {
                 width: 100%;
+                height: 200px;
+                display: none;
             }
-            .form-box button {
-                width: 100%;
-            }
+        }
+        @keyframes scaleUp {
+            0% { transform: scale(0.9); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
-    <div class="form-box">
-        <h1>Create Account</h1>
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
-        {% if success_message %}
-            <p class="success">{{ success_message }}</p>
-            <button onclick="window.location.href='{{ url_for('login') }}'">Back to Login</button>
-        {% else %}
-            <form method="POST" action="{{ url_for('create_account') }}">
-                <label for="first_name">First Name:</label>
-                <input type="text" id="first_name" name="first_name" value="{{ request.form.get('first_name', '') }}" required><br><br>
-
-                <label for="last_name">Last Name:</label>
-                <input type="text" id="last_name" name="last_name" value="{{ request.form.get('last_name', '') }}" required><br><br>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="{{ request.form.get('email', '') }}" required><br><br>
-
-                <label for="phone">Phone Number:</label>
-                <input type="text" id="phone" name="phone" value="{{ request.form.get('phone', '') }}" required><br><br>
-
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" value="{{ request.form.get('dob', '') }}" required><br><br>
-
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required><br><br>
-
-                <label for="re_password">Re-enter Password:</label>
-                <input type="password" id="re_password" name="re_password" required><br><br>
-
-                <button type="submit">Create Account</button>
-            </form>
-            <button onclick="window.location.href='{{ url_for('login') }}'">Already have an account </button>
-        {% endif %}
+    <div class="tcontainer">
+        <div class="form-box">
+            <h1>Create Account</h1>
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            {% if success_message %}
+                <p class="success">{{ success_message }}</p>
+                <button onclick="window.location.href='{{ url_for('login') }}'">Back to Login</button>
+            {% else %}
+                <form method="POST" action="{{ url_for('create_account') }}">
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" id="first_name" name="first_name" value="{{ request.form.get('first_name', '') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" id="last_name" name="last_name" value="{{ request.form.get('last_name', '') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" value="{{ request.form.get('email', '') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number:</label>
+                        <input type="text" id="phone" name="phone" value="{{ request.form.get('phone', '') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth:</label>
+                        <input type="date" id="dob" name="dob" value="{{ request.form.get('dob', '') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="re_password">Re-enter Password:</label>
+                        <input type="password" id="re_password" name="re_password" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Create Account</button>
+                </form>
+                <button class="btn-secondary" onclick="window.location.href='{{ url_for('login') }}'">Already have an account?</button>
+            {% endif %}
+        </div>
+        <div class="slideshow">
+            <img src="{{ url_for('static', filename='img/berry.jpg') }}" alt="Slide 1">
+            <img src="{{ url_for('static', filename='img/Kuber.jpg') }}" alt="Slide 2">
+            <img src="{{ url_for('static', filename='img/amaltas.jpg') }}" alt="Slide 3">
+        </div>
     </div>
 </body>
 </html>
