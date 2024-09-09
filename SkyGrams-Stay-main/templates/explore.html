@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
             background-color: #fff;
             color: #333;
             margin: 0;
@@ -260,6 +259,8 @@
         .destination-section h2 {
             color: #333;
             margin-bottom: 20px;
+            font-family: 'Baskerville', serif;
+            font-weight: 500;
         }
 
         .destinations {
@@ -307,6 +308,8 @@
         .best-rated-section h2 {
             color: #333;
             margin-bottom: 20px;
+            font-family: 'Baskerville', serif;
+            font-weight: 500;
         }
 
         .best-rated-slider {
@@ -410,7 +413,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            background: linear-gradient(to right, #e0f7fa, #fce4ec);
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
             border-radius: 10px;
             margin: 20px 0;
         }
@@ -426,35 +429,37 @@
         }
 
         .list-property-bar .btn-list-now {
-            background-color: #000;
-            color: #fff;
+            background-color: #fff;
+            color: #222;
             padding: 10px 20px;
-            border: none;
+            border: 2px solid #000;
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-
+        
         .list-property-bar .btn-list-now:hover {
-            background-color: #333;
+            background-color: #f0f9f4;
         }
+        
 
         .view-all-button {
             display: inline-block;
-            padding: 8px 16px; /* Reduced padding for a smaller button */
-            border: 1px solid #333; /* Border color */
-            border-radius: 5px; /* Rounded corners */
-            text-decoration: none; /* Remove underline */
-            color: #333; /* Text color */
-            font-weight: bold; /* Bold text */
-            text-align: center; /* Center text */
-            background-color: white; /* Background color */
-            transition: background-color 0.3s; /* Smooth transition */
-            margin-top: 10px; /* Add margin to move it lower */
+            padding: 8px 16px; 
+            border: 1px solid #333; 
+            border-radius: 5px; 
+            text-decoration: none;
+            color: #333; 
+            font-weight: bold; 
+            text-align: center;
+            background-color: white; 
+            transition: background-color 0.3s;
+            margin-top: 10px; 
         }
 
         .view-all-button:hover {
-            background-color: #f0f0f0; /* Change background on hover */
+            background-color: #f0f0f0; 
         }
 
         @media (max-width: 768px) {
@@ -486,7 +491,7 @@
             }
         
             .destination {
-                flex: 0 0 25%; /* Each icon takes up 25% of the container width, showing 4 at a time */
+                flex: 0 0 25%; 
                 text-align: center;
                 scroll-snap-align: start;
             }
@@ -665,8 +670,38 @@
     </div>
 
     <div class="destination-section">
-        <h2>Explore Destinations</h2>
+        <h2  font-family: 'Baskerville', serif;>Explore Destinations</h2>
         <div class="destinations">
+            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
+                <div class="destination">
+                    <img src="{{ url_for('static', filename='img/Mahabaleshwar.svg') }}" alt="Mahabaleshwar">
+                    <p>Mahabaleshwar</p>
+                </div>
+            </a>
+            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
+                <div class="destination">
+                    <img src="{{ url_for('static', filename='img/Hills.svg') }}" alt="Pune">
+                    <p>Pune</p>
+                </div>
+            </a>
+            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
+                <div class="destination">
+                    <img src="{{ url_for('static', filename='img/Lonavala.svg') }}" alt="Bhor">
+                    <p>Bhor</p>
+                </div>
+            </a>
+            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
+                <div class="destination">
+                    <img src="{{ url_for('static', filename='img/Alibag.svg') }}" alt="Alibaug">
+                    <p>Alibaug</p>
+                </div>
+            </a>
+            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
+                <div class="destination">
+                    <img src="{{ url_for('static', filename='img/Kamshet.svg') }}" alt="Mulshi">
+                    <p>Mulshi</p>
+                </div>
+            </a>
             <a href="{{ url_for('Customer_properties') }}" class="destination-link">
                 <div class="destination">
                     <img src="{{ url_for('static', filename='img/Lonavala.svg') }}" alt="Lonavala">
@@ -675,116 +710,19 @@
             </a>
             <a href="{{ url_for('Customer_properties') }}" class="destination-link">
                 <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Goa.svg') }}" alt="Goa">
-                    <p>Goa</p>
+                    <img src="{{ url_for('static', filename='img/Igatpuri.svg') }}" alt="Purandar">
+                    <p>Purandar</p>
                 </div>
             </a>
             <a href="{{ url_for('Customer_properties') }}" class="destination-link">
                 <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Alibag.svg') }}" alt="Alibag">
-                    <p>Alibag</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Pune.svg') }}" alt="Pune">
-                    <p>Pune</p>
-                </div>
-            </a>
-            <!-- Additional destinations -->
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Kamshet.svg') }}" alt="Destination 5">
-                    <p>Kamshet</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Bridge.avif') }}" alt="Destination 6">
-                    <p>Panshet</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Igatpuri.svg') }}" alt="Destination 7">
-                    <p>Igatpuri</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Karjat.svg') }}" alt="Destination 8">
+                    <img src="{{ url_for('static', filename='img/Karjat.svg') }}" alt="Karjat">
                     <p>Karjat</p>
                 </div>
             </a>
             <a href="{{ url_for('Customer_properties') }}" class="destination-link">
                 <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Panchgani.svg') }}" alt="Destination 9">
-                    <p>Panchgani</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Mahabaleshwar.svg') }}" alt="Destination 10">
-                    <p>Mahabaleshwar</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Bridge.avif') }}" alt="Destination 11">
-                    <p>Bhor</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Pawna.svg') }}" alt="Destination 12">
-                    <p>Pawna</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Port Blair.avif') }}" alt="Destination 13">
-                    <p>Dapoli</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Dwarka.avif') }}" alt="Destination 14">
-                    <p>Wai</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Bridge.avif') }}" alt="Destination 15">
-                    <p>Mulshi</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Port Blair.avif') }}" alt="Destination 16">
-                    <p>Kashid</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Khopoli.avif') }}" alt="Destination 17">
-                    <p>Khopoli</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Hills.svg') }}" alt="Destination 17">
-                    <p>Malavli</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Khandala.avif') }}" alt="Destination 17">
-                    <p>Khandala</p>
-                </div>
-            </a>
-            <a href="{{ url_for('Customer_properties') }}" class="destination-link">
-                <div class="destination">
-                    <img src="{{ url_for('static', filename='img/Igatpuri.svg') }}" alt="Destination 7">
+                    <img src="{{ url_for('static', filename='img/Pawna.svg') }}" alt="Shirur">
                     <p>Shirur</p>
                 </div>
             </a>
@@ -795,7 +733,7 @@
     </div>
 
     <div class="best-rated-section">
-        <h2 class="text-center">Best Rated</h2>
+        <h2 class="text-center"  font-family: 'Baskerville', serif;>Best Rated Villas</h2>
         <div class="best-rated-slider">
             <div class="best-rated-slides">
                 <div class="best-rated-slide">
