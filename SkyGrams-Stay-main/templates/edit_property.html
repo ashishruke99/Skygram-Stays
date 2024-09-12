@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Property</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        h1, h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        
+        
+        form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label, input, textarea, select, h2 {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            margin-top: 0;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            box-sizing: border-box; /* Ensures padding and borders are included in the element's width */
+        }
+        
+        textarea {
+            min-height: 80px;
+        }
+        
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }        
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            form {
+                padding: 20px;
+            }
+        
+            h1 {
+                font-size: 22px;
+            }
+
+            h2 {
+                font-size: 20px;
+                margin-top: 10px;
+            }
+        
+            input[type="text"],
+            input[type="number"],
+            textarea,
+            select {
+                font-size: 13px;
+            }
+        
+            input[type="submit"] {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            form {
+                padding: 15px;
+            }
+        
+            h1, h2 {
+                font-size: 18px;
+            }
+        
+            input[type="text"],
+            input[type="number"],
+            textarea,
+            select {
+                font-size: 12px;
+            }
+        
+            input[type="submit"] {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Property</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label for="property_id">Choose a Property:</label>
+        <select name="property_id" id="property_id" required onchange="this.form.submit()">
+            <option value="">Select a property</option>
+            {% for property in properties %}
+                <option value="{{ property.id }}" {% if selected_property and selected_property.id == property.id %}selected{% endif %}>{{ property.property_name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    {% if selected_property %}
+    <form method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="property_id" value="{{ selected_property.id }}">
+        <h2>Editing: {{ selected_property.property_name }}</h2>
+
+        <label for="property_name">Property Name:</label>
+        <input type="text" name="property_name" id="property_name" value="{{ selected_property.property_name }}" required>
+
+        <label for="location">Location:</label>
+        <input type="text" name="location" id="location" value="{{ selected_property.location }}" required>
+
+        <label for="guest_capacity">Guest Capacity:</label>
+        <input type="number" name="guest_capacity" id="guest_capacity" value="{{ selected_property.guest_capacity }}" required>
+
+        <label for="room_count">Room Count:</label>
+        <input type="number" name="room_count" id="room_count" value="{{ selected_property.room_count }}" required>
+
+        <label for="baths">Baths:</label>
+        <input type="number" name="baths" id="baths" value="{{ selected_property.baths }}" required>
+
+        <label for="rating">Rating:</label>
+        <input type="number" step="0.1" name="rating" id="rating" value="{{ selected_property.rating }}" required>
+
+        <label for="rule">Rule:</label>
+        <textarea name="rule" id="rule">{{ selected_property.rule }}</textarea>
+
+        <label for="great_for">Great For:</label>
+        <input type="text" name="great_for" id="great_for" value="{{ selected_property.great_for }}" required>
+
+        <label for="price">Price:</label>
+        <input type="number" name="price" id="price" value="{{ selected_property.price }}" required>
+
+        <label for="highlights">Highlights:</label>
+        <textarea name="highlights" id="highlights">{{ selected_property.highlights }}</textarea>
+
+        <label for="location_description">Location Description:</label>
+        <textarea name="location_description" id="location_description">{{ selected_property.location_description }}</textarea>
+
+        <label for="location_link">Location Link:</label>
+        <input type="text" name="location_link" id="location_link" value="{{ selected_property.location_link }}">
+
+        <label for="cover_photo">Cover Photo:</label>
+        <input type="file" name="cover_photo" id="cover_photo">
+
+        <input type="submit" name="update_property" value="Update Property">
+    </form>
+    {% endif %}
+</body>
+</html>
