@@ -306,10 +306,13 @@
 
         /* Responsive Styles */
         @media (max-width: 768px) {
-            .header-top__container {
-                flex-direction: row;
-                justify-content: space-between;
+            .header-top__contact-info a {
+                display: flex;
                 align-items: center;
+            }
+        
+            .header-top__contact-info a span {
+                display: none;
             }
 
             .navbar .navbar-brand,
@@ -374,8 +377,12 @@
     <div class="header-top">
         <div class="container header-top__container">
             <div class="header-top__contact-info">
-                <a href="mailto:info@skygramstays.in"><i class="bi bi-envelope"></i> info@skygramstays.in</a>
-                <a href="#"><i class="bi bi-geo-alt"></i> Mukund Nagar, Pune</a>
+                <a href="mailto:info@skygramstays.in">
+                    <i class="bi bi-envelope"></i> <span>info@skygramstays.in</span>
+                </a>
+                <a href="#">
+                    <i class="bi bi-geo-alt"></i> <span>Mukund Nagar, Pune</span>
+                </a>
             </div>
             <div class="header-top__login-button-container">
                 {% if 'user_id' in session %}
