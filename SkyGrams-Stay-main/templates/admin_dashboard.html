@@ -278,7 +278,8 @@
         <button class="admin-options" onclick="toggleSection('guestInfo')">Guest Customer Information</button>
         <button class="admin-options" onclick="toggleSection('viewProperties')">View Properties</button>
         <button class="admin-options" onclick="window.location.href='{{ url_for('edit_prices') }}'">Edit Prices</button>
-        <button class="admin-options" onclick="window.location.href='{{ url_for('delete_property') }}'">Delete Prooerty</button>
+        <button class="admin-options" onclick="window.location.href='{{ url_for('delete_property') }}'">Delete Property</button>
+        <button class="admin-options" onclick="window.location.href='{{ url_for('edit_property') }}'">Edit Property</button>
     </div>
     <div class="content" id="content">
         <div id="customerInfo" class="customer-info">
