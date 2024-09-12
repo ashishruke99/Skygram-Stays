@@ -8,8 +8,6 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='lib/animate/animate.min.css') }}" rel="stylesheet">
@@ -73,44 +71,53 @@
         .header-top__login-button-container {
             display: flex;
             align-items: center;
+            gap: 10px; 
         }
-
+        
         .user-icon img {
-            width: 30px;
-            height: 30px;
+            width: 32px; 
+            height: 32px;
             border-radius: 50%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease; 
         }
-
-        .user-dropdown {
-            position: absolute;
-            top: 100%;
-            background-color: white;
-            border: 1px solid #555;
-            border-radius: 10px;
-            padding: 5px 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            display: none;
-            right: 0;
-            z-index: 1000;
+        
+        .user-icon img:hover {
+            transform: scale(1.1); 
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); 
         }
-
-        .user-dropdown a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .user-dropdown a:hover {
-            background-color: #f2f2f2;
-        }
-
+        
         .user-icon button {
             background: none;
             border: none;
             cursor: pointer;
+            padding: 5px; 
         }
-
+        
+        .user-dropdown {
+            position: absolute; 
+            background-color: white;
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            padding: 8px 0; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+            display: none;
+            right: 0;
+            z-index: 1000;
+            min-width: 160px; 
+        }
+        
+        .user-dropdown a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px; 
+            transition: background 0.2s, color 0.2s; 
+        }
+        
+        .user-dropdown a:hover {
+            background-color: #f5f5f5; 
+        }
+        
         .navbar {
             background-color: white;
             color: #333;
@@ -380,7 +387,7 @@
                 <a href="mailto:info@skygramstays.in">
                     <i class="bi bi-envelope"></i> <span>info@skygramstays.in</span>
                 </a>
-                <a href="#">
+                <a href="https://maps.app.goo.gl/HyNWN7kh82QA3Ljy9">
                     <i class="bi bi-geo-alt"></i> <span>Mukund Nagar, Pune</span>
                 </a>
             </div>
@@ -390,9 +397,8 @@
                         <button><img src="{{ url_for('static', filename='img/user.png') }}" alt="User Icon"></button>
                         <div class="user-dropdown">
                             <a href="#">Hi {{ session['first_name'] }} {{ session['last_name'] }}</a>
-                            <a href="#">Edit Profile</a>
                             <a href="{{ url_for('logout') }}">Logout</a>
-                            <a href="tel:+919226784221" class="call-button"><i class="bi bi-phone"></i>+91 9226784221</a>
+                            <a href="tel:+919226784221" class="call-button"><i class="bi bi-phone"></i>Call Us</a>
                         </div>
                     </div>
                 {% else %}
