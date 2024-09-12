@@ -193,6 +193,7 @@
             font-size: 1.75rem;
             color: #333;
             font-weight: 600;
+            font-family: 'Baskerville', serif;
         }
         
         .rating-badge {
@@ -215,9 +216,8 @@
         }
         
         .overview-item {
-            background: #f8f8f8;
+            background: #f7f7f7;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             padding: 15px;
             margin-bottom: 5px; 
         }
@@ -323,11 +323,12 @@
         
         .room-details {
             padding: 15px;
-            color: #000; 
+            color: #000;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-        }
+            justify-content: flex-start; 
+            height: 100%;
+        }   
         
         .room-details h4 {
             margin: 10px 0;
@@ -345,6 +346,22 @@
         
         .room:hover {
             border: 1px solid #000;
+        }   
+
+        .image-wrapper {
+            position: relative;
+        }
+        
+        .image-name {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            text-transform: capitalize; 
         }   
         
         .tab-content {
@@ -378,32 +395,42 @@
             margin-right: 15px; 
             width: 32px; 
             height: 32px;
+        }      
+
+        .amenities-tabs {
+            display: flex;
+            justify-content: space-between; 
+            margin-bottom: 20px;
+            padding: 20px;
         }
-        
-        .show-more-container {
-            text-align: center;
-            margin-top: 15px;
-        }
-        
-        #show-more-button {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
+
+
+        .amenities-tabs button {
+            background-color: white; 
+            color: #004d00;
+            border: 2px solid #004d00; 
+            border-radius: 10px; 
+            padding: 10px 15px;
             cursor: pointer;
-            font-size: 1rem;
-            border: none;
-            transition: background-color 0.3s ease;
+            transition: color 0.3s, text-decoration 0.3s; 
+            font-size: 16px; 
+            flex: 1; 
+            margin: 0 5px; 
         }
-        
-        #show-more-button:hover {
-            background-color: #555;
+
+
+        .amenities-tabs button:hover {
+            background-color: #e0f2e0; 
+            color: #004d00; 
         }
+
+        .amenities-tabs button.active {
+            text-decoration: underline; 
+            font-weight: bold; 
+        }
+
         
-        .hidden-amenities {
-            display: none;
-        }        
-        
+       
         .meal-item {
             display: flex;
             align-items: center;
@@ -426,17 +453,14 @@
             align-items: center;
             margin-top: 40px;
             margin-bottom: 20px;
+            font-family: 'Baskerville', serif;
         }
         .section-heading h3 {
             margin: 0;
             margin-right: 10px;
             color: #000;
         }
-        .section-heading .heading-line {
-            flex-grow: 1;
-            height: 2px;
-            background-color: #333;
-        }
+        
         .gradient-button {
             background-image: linear-gradient(to right, #333, #555);
             color: #fff;
@@ -516,21 +540,7 @@
             width: 65%;
             padding-right: 15px;
         }
-
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 8px;
-            width: 100%;
-            transition: background-color 0.3s, color 0.3s;
-        }
         
-        /* Total Amount Styling */
         .total-amount {
             font-size: 22px;
             font-weight: bold;
@@ -541,7 +551,7 @@
         .total-amount i {
             margin-right: 10px;
             color: #28a745;
-        }
+        }        
         
         /* Pay Now Button */
         .btn-pay {
@@ -583,38 +593,6 @@
             margin-bottom: 10px;
         }
         
-        /* Call Us Button */
-        .btn-call {
-            background-color: #e8e8e8;
-            color: #fff;
-        }
-        
-        .btn-call i {
-            margin-right: 8px;
-        }
-        
-        .btn-call:hover {
-            background-color: #117a8b;
-        }
-        
-        /* Continue Browsing Button */
-        .btn-browse {
-            background-color: #e8e8e8;
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .btn-browse i {
-            margin-right: 8px;
-        }
-        
-        .btn-browse:hover {
-            background-color: #e8e8e8;
-        }
-        
         /* Spacing Adjustments */
         .mt-2 {
             margin-top: 10px;
@@ -639,6 +617,7 @@
             max-height: calc(100vh - 100px);
             overflow-y: auto;
         }
+
         .payment-column h3 {
             margin-bottom: 20px;
         }
@@ -690,17 +669,6 @@
             margin-right: 10px;
         }
         
-        @media (max-width: 768px) {
-            .content-column, .payment-column {
-                width: 100%;
-                margin: 0;
-                padding: 0;
-            }
-            .payment-column {
-                margin-top: 20px;
-                position: static;
-            }
-        }
         .modal {
             display: none;
             position: fixed;
@@ -833,8 +801,6 @@
             background-color: blue;
         }
         
-
-        /* Additional Styles */
         .property-header {
             display: flex;
             justify-content: space-between;
@@ -851,29 +817,174 @@
             margin-top: 20px;
         }
         
-        .btn-custom {
-            flex: 1;
-            background-color: #333;
-            color: #fff;
-            border-radius: 10px;
-            padding: 10px 30px;
-            text-align: center;
-            text-decoration: none; 
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            margin: 0 10px;
-        }
-        
-        .btn-custom:hover {
-            background-color: #555;
-            color: #fff;
-            text-decoration: none; 
-        }
-        
         #house-rules-content {
             display: none;
             margin-top: 20px;
         }
+
+        @media (max-width: 768px) {
+                .payment-column {
+                    flex: 0 0 100%;
+                    width: 100%;
+                    margin-top: 20px;
+                    padding: 15px;
+                    box-sizing: border-box;
+                }
+            
+                .overview-grid {
+                    grid-template-columns: 1fr;
+                    gap: 10px;
+                }
+            
+                .cover-photo .overlay-button {
+                    bottom: 10px;
+                    right: 10px;
+                    padding: 5px 10px;
+                    font-size: 0.8rem;
+                }
+            
+                .image-gallery img, .meal-item img {
+                    width: 100%;
+                    margin-bottom: 10px;
+                    height: auto;
+                }
+            
+                .location-iframe-container {
+                    height: auto;
+                    width: 100%;
+                    margin-bottom: 20px;
+                }
+            
+                iframe {
+                    width: 100%;
+                    height: auto;
+                }
+
+                .cover-photo .overlay-button, 
+                .icon-buttons .icon-btn {
+                    padding: 5px 10px;
+                    font-size: 0.8rem;
+                }
+            .cover-photo-container {
+                height: 180px;
+            }
+        
+            .cover-photo .overlay-button {
+                bottom: 10px;
+                right: 10px;
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+        
+            .image-gallery {
+                gap: 5px;
+                padding-bottom: 5px;
+            }
+        
+            .image-gallery img {
+                flex: 0 0 180px;
+                height: 100px;
+            }
+        
+            .nav-tabs-custom {
+                display: none;
+            }
+        
+            .overview-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        
+            .overview-header h1 {
+                font-size: 1.25rem;
+                margin-bottom: 0;
+                width: 70%;
+            }
+        
+            .rating-badge {
+                padding: 5px 10px;
+                font-size: 0.9rem;
+                margin-left: 10px;
+            }
+        
+            .overview-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        
+            .buttons-container {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 15px;
+            }
+        
+            .room {
+                flex: 0 0 100%;
+            }
+        
+            .room img {
+                height: 120px;
+            }
+        
+            .meal-item {
+                flex-direction: column;
+                margin-bottom: 10px;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+        
+            .meal-item img {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        
+            .location-iframe-container {
+                height: 250px;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        
+            .payment-column {
+                width: 100%;
+                margin-top: 20px;
+                padding: 15px;
+                box-sizing: border-box;
+            }
+
+            @media (max-width: 768px) {
+                .amenities-list {
+                    grid-template-columns: 1fr 1fr; 
+                    gap: 10px;
+                }
+            
+                .amenities-list li {
+                    font-size: 1rem; 
+                }
+            
+                .amenities-list li img {
+                    width: 24px; 
+                    height: 24px;
+                    margin-right: 10px;
+                }
+            
+                .amenities-section {
+                    padding: 10px; 
+                }
+            
+                .amenities-tabs {
+                    flex-direction: column; 
+                    align-items: stretch;
+                }
+            
+                .amenities-tabs button {
+                    margin-bottom: 10px; 
+                    font-size: 14px; 
+                }
+            }
+            
+        }
+        
     </style>
 </head>
 <body data-spy="scroll" data-target="#myTab" data-offset="50">
@@ -931,7 +1042,7 @@
                 <div id="overview" class="tab-content">
                     <div class="overview-section">
                         <div class="overview-header">
-                            <h1>{{ property.property_name }}</h1>
+                            <h1 font-family: 'Baskerville', serif;>{{ property.property_name }}</h1>
                             <span class="rating-badge">{{ property.rating }}</span>
                         </div>
                         <div class="overview-grid">
@@ -956,91 +1067,83 @@
                         </div>
                     </div>
                 </div>                                
-                <div id="highlights" class="tab-content">
-                    <div class="section-heading">
-                        <h3>Highlights</h3>
-                        <div class="heading-line"></div>
-                    </div>
-                    
-                    <div>
-                        {{ property.highlights | safe }}
-                    </div>
-                    
-                    <div class="buttons-container">
-                        <button class="btn-custom" id="house-rules-btn">House Rules</button>
-                        <a href="#" class="btn-custom" id="terms-conditions-btn">Terms & Conditions</a>
-                        <a href="#faqs" class="btn-custom">FAQs</a>
-                    </div>
-                    <div id="house-rules-content">
-                        <h4>House Rules</h4>
-                        <div>
-                            {{ property.rule | safe }}
+                                   
+                    <div id="highlights" class="tab-content">
+                        <div class="section-heading">
+                            <h3>Highlights</h3>
+                        </div>
+                        <p>{{ property.highlights }}</p>
+                        <div class="buttons-container">
+                            <button id="house-rules-btn" style="background-color: #fff; color: #006400; border: 2px solid #006400; border-radius: 10px; padding: 10px 20px; cursor: pointer; width: 100%; transition: background-color 0.3s, color 0.3s;" 
+                            onmouseover="this.style.backgroundColor='#e0f2e0';" 
+                            onmouseout="this.style.backgroundColor='#fff';">
+                                House Rules
+                            </button>
+                            <a href="#" id="terms-conditions-btn" style="background-color: #fff; color: #006400; border: 2px solid #006400; border-radius: 10px; padding: 10px 20px; text-decoration: none; display: inline-block; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.3s, color 0.3s;" 
+                            onmouseover="this.style.backgroundColor='#e0f2e0';" 
+                            onmouseout="this.style.backgroundColor='#fff';">
+                                Terms & Conditions
+                            </a>
+                            <a href="#faqs" style="background-color: #fff; color: #006400; border: 2px solid #006400; border-radius: 10px; padding: 10px 20px; text-decoration: none; display: inline-block; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.3s, color 0.3s;" 
+                            onmouseover="this.style.backgroundColor='#e0f2e0';" 
+                            onmouseout="this.style.backgroundColor='#fff';">
+                                FAQs
+                            </a>
+                        </div>                    
+                        <div id="house-rules-content">
+                            <h4>House Rules</h4>
+                            <p>{{ property.rule }}</p>
                         </div>
                     </div>
-                </div>
-                <div id="spaces" class="tab-content">
+                          <div id="spaces" class="tab-content">
                     <div class="section-heading">
                         <h3>Spaces</h3>
-                        <div class="heading-line"></div>
                     </div>
                     <div class="rooms-gallery">
                         {% for room in property.rooms %}
-                            <div class="room">
+                        <div class="room">
+                            <div class="image-wrapper">
                                 <img src="{{ url_for('static', filename='uploads/' ~ room.room_photo) }}" alt="Room Image">
-                                <div class="room-details">
-                                    <h4>{{ room.room_name }}</h4>
-                                    <p>{{ room.room_description }}</p>
-                                </div>
+                                <div class="image-name">{{ room.room_photo.split('.')[0] }}</div>
                             </div>
+                            <div class="room-details">
+                                <h4>{{ room.room_name }}</h4>
+                                <p>{{ room.room_description }}</p>
+                            </div>
+                        </div>
                         {% endfor %}
                     </div>                                        
                 </div>
                 <div id="amenities" class="tab-content">
                     <div class="section-heading">
                         <h3>Amenities</h3>
-                        <div class="heading-line"></div>
                     </div>
                 
-                    <!-- Available Amenities Section -->
+                    <div class="amenities-tabs">
+                        <button data-status="available" onclick="showAmenities('available')">Available</button>
+                        <button data-status="not_available" onclick="showAmenities('not_available')">Not Available</button>
+                        <button data-status="paid" onclick="showAmenities('paid')">Prior Notice</button>
+                    </div>
+                
                     <div class="amenities-section">
-                        <h4>Available Amenities</h4>
-                        <ul class="amenities-list">
+                        <ul id="amenities-list" class="amenities-list">
                             {% for amenity in property.amenities %}
                                 {% if amenity.status == 'available' %}
-                                    <li><img src="{{ url_for('static', filename=amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}</li>
+                                    <li data-status="available"><img src="{{ url_for('static', filename=amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}</li>
+                                {% elif amenity.status == 'paid' %}
+                                    <li data-status="paid" style="display:none;"><img src="{{ url_for('static', filename=amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}</li>
+                                {% elif amenity.status == 'not_available' %}
+                                    <li data-status="not_available" style="display:none;"><img src="{{ url_for('static', filename=amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}</li>
                                 {% endif %}
                             {% endfor %}
                         </ul>
                     </div>
+                </div>
                 
-                    <!-- Paid Amenities Section -->
-                    <div class="amenities-section">
-                        <h4>Paid Amenities</h4>
-                        <ul class="amenities-list">
-                            {% for amenity in property.amenities %}
-                                {% if amenity.status == 'paid' %}
-                                    <li><img src="{{ url_for('static', filename=amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}</li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                
-                    <!-- Not Available Amenities Section -->
-                    <div class="amenities-section">
-                        <h4>Not Available Amenities</h4>
-                        <ul class="amenities-list">
-                            {% for amenity in property.amenities %}
-                                {% if amenity.status == 'not_available' %}
-                                    <li><img src="{{ url_for('static', filename=amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}</li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>                
+                                
                 <div id="meals" class="tab-content">
                     <div class="section-heading">
                         <h3>Meal Options</h3>
-                        <div class="heading-line"></div>
                     </div>
                     {% for meal in property.meals %}
                         <div class="meal-item">
@@ -1052,18 +1155,21 @@
                 <div id="location" class="tab-content">
                     <div class="section-heading">
                         <h3>Location</h3>
-                        <div class="heading-line"></div>
                     </div>
                     <p>{{ property.location_description | safe  }}</p>
                     <div class="location-iframe-container">
-                        <iframe src="{{ property.location_link }}" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        {% if property.location_link %}
+                            <iframe src="{{ property.location_link }}" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        {% else %}
+                            <p>Location is currently unavailable.</p>
+                        {% endif %}
                     </div>
+                    
                 </div>                
                 <div id="faqs" class="tab-content">
                     <div id="faqs-heading" onclick="toggleFAQSection()">
                         <div class="section-heading">
                             <h3>FAQs <span id="faq-arrow">&#x25BC;</span></h3>
-                            <div class="heading-line"></div>
                         </div>
                     </div>
                     <div id="faq-content" style="display: none;">
@@ -1084,7 +1190,6 @@
                 <div id="reviews" class="tab-content">
                     <div class="section-heading">
                         <h3>Reviews</h3>
-                        <div class="heading-line"></div>
                     </div>
                     {% for review in property.reviews %}
                         <div class="review">
@@ -1109,8 +1214,16 @@
     <img src="{{ url_for('static', filename='img/leaf.jpg') }}" class="floating-background-image top-left" alt="Top Left Image">
     <img src="{{ url_for('static', filename='img/leaf.jpg') }}" class="floating-background-image bottom-right" alt="Bottom Right Image">
     <div class="d-flex justify-content-between mb-3">
-        <button class="btn btn-custom" id="check-availability">Check Availability</button>
-        <button class="btn btn-custom" id="terms-conditions">Terms and Conditions</button>
+        <button id="check-availability" class="btn" style="background-color: #fff; color: #4169e1; border: 1px solid #4169e1; border-radius: 10px; padding: 10px 20px; cursor: pointer; width: 48%; transition: background-color 0.3s, color 0.3s;" 
+        onmouseover="this.style.backgroundColor='#d4e3fc';" 
+        onmouseout="this.style.backgroundColor='#fff';">
+            Check Availability
+        </button>
+        <button id="terms-conditions" class="btn" style="background-color: #fff; color: #4169e1; border: 1px solid #4169e1; border-radius: 10px; padding: 10px 20px; cursor: pointer; width: 48%; transition: background-color 0.3s, color 0.3s;" 
+        onmouseover="this.style.backgroundColor='#d4e3fc';" 
+        onmouseout="this.style.backgroundColor='#fff';">
+            Terms and Conditions
+        </button>
     </div>
     <div id="calendar-container" style="display: none;">
         <h3>Availability</h3>
@@ -1134,21 +1247,22 @@
 <h4 class="mt-4 total-amount">
      Total Amount: ₹<span id="payment-amount">0.00</span>
 </h4>
-
-<!-- Confirm Order Button -->
-<button id="confirm-order" class="btn btn-confirm mt-2">
+<button id="confirm-order" class="btn mt-2" style="background-color: #28a745; color: #fff; border-radius: 10px; padding: 10px 20px; border: none; cursor: pointer; width: 100%; transition: background-color 0.3s, color 0.3s;" 
+onmouseover="this.style.backgroundColor='#d4edda'; this.style.color='#28a745';" 
+onmouseout="this.style.backgroundColor='#28a745'; this.style.color='#fff';">
     <i class="fas fa-check-circle"></i> Confirm Order
 </button>
+
 <!-- "Still Having Doubts?" Section -->
 <div class="last-minute-doubts mt-4">
     <p>Still having last minute doubts?</p>
-    <button class="btn btn-call mt-2" id="call-us">
+    <button class="btn mt-2" id="call-us" style="background-color: #d4e3fc; color: #4169e1; border: 1px solid #4169e1; border-radius: 10px; padding: 10px 20px; cursor: pointer; width: 100%; transition: background-color 0.3s, color 0.3s;">
         <i class="fas fa-phone-alt"></i> Call Us
     </button>
 </div>
 
-<a href="{{ url_for('Customer_properties') }}" class="btn btn-browse mt-4">
-    <i class="fas fa-arrow-left"></i> Continue Browsing Other Villas
+<a href="{{ url_for('Customer_properties') }}" class="btn mt-4" style="background-color: #fff; color: #4169e1; border: 1px solid #4169e1; border-radius: 10px; padding: 10px 20px; text-decoration: none; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s, color 0.3s;">
+    <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Continue Browsing Other Villas
 </a>
 </div>
 </div>
@@ -1190,10 +1304,34 @@
     </div>
 </div>
 <script>
+    function showAmenities(status) {
+        // Get all the amenity items
+        var items = document.querySelectorAll('#amenities-list li');
+        
+        // Show or hide items based on status
+        items.forEach(function(item) {
+            item.style.display = item.getAttribute('data-status') === status ? '' : 'none';
+        });
+        
+        // Get all the buttons
+        var buttons = document.querySelectorAll('.amenities-tabs button');
+        
+        // Remove 'active' class from all buttons
+        buttons.forEach(function(button) {
+            button.classList.remove('active');
+        });
+        
+        // Add 'active' class to the button with matching data-status
+        var activeButton = Array.from(buttons).find(button => button.getAttribute('data-status') === status);
+        if (activeButton) {
+            activeButton.classList.add('active');
+        }
+    }
+    
+
     document.addEventListener('DOMContentLoaded', function() {
         const avatars = document.querySelectorAll('.user-avatar');
-        const colors = ['#ff7f7f', '#7f7fff', '#7fff7f', '#ff7fff', '#ffff7f', '#ffb77f', '#7fffff'];
-        
+        const colors = ['#004d00', '#003399', '#003300', '#330066', '#666600', '#993300', '#006666'];        
         avatars.forEach(avatar => {
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             avatar.style.backgroundColor = randomColor;
@@ -1426,21 +1564,6 @@
         document.getElementById('terms-conditions-btn').addEventListener('click', function() {
             window.open('/terms', '_blank');
         });
-
-        function toggleAmenities() {
-            const hiddenAmenities = document.querySelectorAll('.hidden-amenities');
-            const button = document.querySelector('.show-more-button');
-            
-            hiddenAmenities.forEach(item => {
-                if (item.style.display === "none" || item.style.display === "") {
-                    item.style.display = "flex"; 
-                } else {
-                    item.style.display = "none"; 
-                }
-            });
-        
-            button.textContent = button.textContent === "See All" ? "See Less" : "See All";
-        }
         
         $.ajax({
             url: '/get_user_details',
