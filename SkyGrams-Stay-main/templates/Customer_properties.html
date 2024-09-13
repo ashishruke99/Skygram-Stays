@@ -987,6 +987,17 @@
                         <img src="{{ url_for('static', filename='img/leaf.jpg') }}" class="floating-background-image bottom-right" alt="Bottom Right Image">
                         <div style="margin-bottom: 15px;">
                             <label style="font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #333; display: block;">Price Range:</label>
+                            <div style="margin-bottom: 15px;">
+                                <label style="font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #333; display: block;">Location:</label>
+                                <select name="location" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                                    <option value="ALL">All Locations</option>
+                                    <option value="Pune" {% if request.args.get('location') == 'Pune' %}selected{% endif %}>Pune</option>
+                                    <option value="Mumbai" {% if request.args.get('location') == 'Mumbai' %}selected{% endif %}>Mumbai</option>
+                                    <option value="Goa" {% if request.args.get('location') == 'Goa' %}selected{% endif %}>Goa</option>
+                                    <option value="Rajgad" {% if request.args.get('location') == 'Rajgad' %}selected{% endif %}>Rajgad</option>
+                                    <!-- Add more locations as needed -->
+                                </select>
+                            </div>
                             <div style="margin-bottom: 5px;">
                                 <label for="price_0_10k" style="font-size: 14px;">
                                     <input type="checkbox" id="price_0_10k" name="price_range" value="0-10000" {% if '0-10000' in request.args.getlist('price_range') %}checked{% endif %}> ₹0 - ₹10,000
@@ -1025,12 +1036,31 @@
                         <label for="room_count" style="font-size: 14px; font-weight: 600; margin-bottom: 5px; color: #333;">Room Count:</label>
                         <input type="number" id="room_count" name="room_count" value="{{ request.args.get('room_count', '') }}" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
                         
-                       <!-- Amenities Checkboxes -->
-                       <label for="wifi">Wi-Fi</label>
-                       <input type="checkbox" id="wifi" name="amenities" value="Wi-Fi" {% if 'Wi-Fi' in request.args.getlist('amenities') %}checked{% endif %}>
-                       <label for="tv">TV</label>
-                       <input type="checkbox" id="tv" name="amenities" value="TV" {% if 'TV' in request.args.getlist('amenities') %}checked{% endif %}>
-        
+                        <div style="margin-bottom: 15px;">
+                            <label style="font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #333; display: block;">Amenities:</label>
+                            
+                        <!-- Amenity: TV -->
+                        <div class="amenity-option" style="margin-bottom: 15px;">
+                            <label for="amenities_tv" style="font-size: 14px; font-weight: 600; color: #333;">
+                                <img src="{{ url_for('static', filename='icon/TV.webp') }}" alt="TV" width="30"> TV
+                            </label>
+                            <div style="margin-top: 10px;">
+                                <input type="checkbox" id="tv_available" name="amenities_tv" value="available" {% if request.args.get('amenities_tv') == 'available' %}checked{% endif %}>
+                                <label for="tv_available">Available</label>
+                            </div>
+                        </div>
+
+                        <!-- Amenity: Wi-Fi -->
+                        <div class="amenity-option" style="margin-bottom: 15px;">
+                            <label for="amenities_wifi" style="font-size: 14px; font-weight: 600; color: #333;">
+                                <img src="{{ url_for('static', filename='icon/Wi-Fi.webp') }}" alt="Wi-Fi" width="30"> Wi-Fi
+                            </label>
+                            <div style="margin-top: 10px;">
+                                <input type="checkbox" id="wifi_available" name="amenities_wifi" value="available" {% if request.args.get('amenities_wifi') == 'available' %}checked{% endif %}>
+                                <label for="wifi_available">Available</label>
+                            </div>
+                        </div>
+                        </div>
                         <!-- Submit and Reset Buttons -->
                         <div style="display: flex; justify-content: space-between; margin-top: 20px;">
                             <button type="submit" style="width: 48%; padding: 10px; font-size: 14px; font-weight: 600; color: white; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, transform 0.3s;">Apply Filter</button>
