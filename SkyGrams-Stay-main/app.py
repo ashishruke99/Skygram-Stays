@@ -12,8 +12,7 @@ import razorpay
 import psycopg2
 from flask_mail import Mail, Message
 from sqlalchemy import or_
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -22,17 +21,17 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key'  # For flash messages
 
-# Flask-Mail configuration
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'info@skygramstays.in'
-app.config['MAIL_PASSWORD'] = 'qnke arqv wawn rant'
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-db = SQLAlchemy(app)
+load_dotenv(dotenv_path='security/.env')
+# Configure the mail server using environment variables
+app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
+app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
+app.config['MAIL_USE_SSL'] = os.getenv('MAIL_USE_SSL') == 'True'
+
 mail = Mail(app)
-db = SQLAlchemy()  # Initialize SQLAlchemy
-db.init_app(app)    # Bind SQLAlchemy to Flask app
+
 #Creating Data Base
 def init_db():
     with app.app_context():
@@ -513,6 +512,45 @@ def submitP():
             db.session.rollback()
             flash(f"An error occurred: {e}", 'error')
             return redirect(url_for('admin_dashboard'))
+        
+@app.route('/edit_property', methods=['GET', 'POST'])
+def edit_property():
+    properties = Property.query.all()
+    selected_property = None
+
+    if request.method == 'POST':
+        selected_property_id = request.form.get('property_id')
+        if selected_property_id:
+            selected_property = Property.query.get(selected_property_id)
+            if 'update_property' in request.form:
+                # Handle the update of the selected property
+                selected_property.property_name = request.form['property_name']
+                selected_property.location = request.form['location']
+                selected_property.guest_capacity = request.form['guest_capacity']
+                selected_property.room_count = request.form['room_count']
+                selected_property.baths = request.form['baths']
+                selected_property.rating = request.form['rating']
+                selected_property.rule = request.form['rule']
+                selected_property.great_for = request.form['great_for']
+                selected_property.price = request.form['price']
+                selected_property.highlights = request.form['highlights']
+                selected_property.location_description = request.form['location_description']
+                selected_property.location_link = request.form['location_link']
+
+                # Handle cover photo update if needed
+                if 'cover_photo' in request.files and request.files['cover_photo'].filename != '':
+                    cover_photo = request.files['cover_photo']
+                    cover_photo_filename = secure_filename(cover_photo.filename)
+                    cover_photo.save(os.path.join(app.config['UPLOAD_FOLDER'], cover_photo_filename))
+                    selected_property.cover_photo = cover_photo_filename
+
+                db.session.commit()
+                flash('Property updated successfully!', 'success')
+                return redirect(url_for('edit_property'))
+            
+
+    return render_template('edit_property.html', properties=properties, selected_property=selected_property)
+
 
 @app.route('/Customer_properties', methods=['GET', 'POST'])
 def Customer_properties():
@@ -539,10 +577,22 @@ def Customer_properties():
     if room_count:
         properties_query = properties_query.filter(Property.room_count >= room_count)
 
-    # Filter by amenities
-    amenities = request.args.getlist('amenities')
-    if amenities:
-        properties_query = properties_query.join(Amenity).filter(Amenity.name.in_(amenities))
+    # Filter by available amenities
+    amenities_filters = []
+    
+    if request.args.get('amenities_tv') == 'available':
+        amenities_filters.append(or_(Amenity.name == 'TV', Amenity.status == 'available'))
+    if request.args.get('amenities_wifi') == 'available':
+        amenities_filters.append(or_(Amenity.name == 'Wi-Fi', Amenity.status == 'available'))
+    
+    # Apply amenities filter if any are selected
+    if amenities_filters:
+        properties_query = properties_query.filter(
+            Property.amenities.any(*amenities_filters)
+        )
+
+    # Execute the query to get the properties
+    properties = properties_query.all()
 
     # Filter by location
     location_filter = request.args.get('location', 'ALL')
@@ -869,4 +919,4 @@ def register():
 
 if __name__ == '__main__':
     init_db()  # Ensure the database is initialized
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)
