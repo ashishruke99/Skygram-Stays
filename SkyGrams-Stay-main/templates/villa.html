@@ -823,48 +823,43 @@
         }
 
         @media (max-width: 768px) {
-                .payment-column {
-                    flex: 0 0 100%;
-                    width: 100%;
-                    margin-top: 20px;
-                    padding: 15px;
-                    box-sizing: border-box;
-                }
+            .payment-column {
+                flex: 0 0 100%;
+                width: 100%;
+                margin-top: 20px;
+                padding: 15px;
+                box-sizing: border-box;
+            }
+           
+            .overview-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
             
-                .overview-grid {
-                    grid-template-columns: 1fr;
-                    gap: 10px;
-                }
+            .cover-photo .overlay-button {
+                bottom: 10px;
+                right: 10px;
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
             
-                .cover-photo .overlay-button {
-                    bottom: 10px;
-                    right: 10px;
-                    padding: 5px 10px;
-                    font-size: 0.8rem;
-                }
+            .image-gallery img, .meal-item img {
+                width: 100%;
+                margin-bottom: 10px;
+                height: auto;
+            }
             
-                .image-gallery img, .meal-item img {
-                    width: 100%;
-                    margin-bottom: 10px;
-                    height: auto;
-                }
-            
-                .location-iframe-container {
-                    height: auto;
-                    width: 100%;
-                    margin-bottom: 20px;
-                }
-            
-                iframe {
-                    width: 100%;
-                    height: auto;
-                }
+            iframe {
+                width: 100%;
+                height: auto;
+            }
 
-                .cover-photo .overlay-button, 
-                .icon-buttons .icon-btn {
-                    padding: 5px 10px;
-                    font-size: 0.8rem;
-                }
+            .cover-photo .overlay-button, 
+            .icon-buttons .icon-btn {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+            
             .cover-photo-container {
                 height: 180px;
             }
@@ -959,13 +954,16 @@
 
             @media (max-width: 768px) {
                 .amenities-list {
-                    grid-template-columns: 1fr 1fr; 
+                    display: flex;
+                    flex-direction: column;
                     gap: 10px;
                 }
-            
+                
                 .amenities-list li {
-                    font-size: 1rem; 
-                }
+                    display: flex;
+                    align-items: center;
+                    font-size: 1rem;
+                }            
             
                 .amenities-list li img {
                     width: 24px; 
@@ -1077,7 +1075,7 @@
                         <div class="section-heading">
                             <h3>Highlights</h3>
                         </div>
-                        <p>{{ property.highlights }}</p>
+                        <p>{{ property.highlights | safe }}</p>
                         <div class="buttons-container">
                             <button id="house-rules-btn" style="background-color: #fff; color: #006400; border: 2px solid #006400; border-radius: 10px; padding: 10px 20px; cursor: pointer; width: 100%; transition: background-color 0.3s, color 0.3s;" 
                             onmouseover="this.style.backgroundColor='#e0f2e0';" 
@@ -1097,7 +1095,7 @@
                         </div>                    
                         <div id="house-rules-content">
                             <h4>House Rules</h4>
-                            <p>{{ property.rule }}</p>
+                            <p>{{ property.rule | safe }}</p>
                         </div>
                     </div>
                           <div id="spaces" class="tab-content">
