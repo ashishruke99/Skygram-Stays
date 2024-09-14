@@ -1091,9 +1091,7 @@
                             <hr>
                             <div class="property-great-for">
                                 Great for:
-                                {% for item in property.great_for %}
-                                    <span style="letter-spacing: -0.25em;">{{item}}</span>
-                                {% endfor %}
+                                <span>{{ property.great_for }}</span>
                             </div>
                             <div class="property-amenities">
                                 {% for amenity in property.amenities[:4] %}
