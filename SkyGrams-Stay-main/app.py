@@ -13,7 +13,6 @@ import psycopg2
 from flask_mail import Mail, Message
 from sqlalchemy import or_
 from dotenv import load_dotenv
-init_db()
 
 app = Flask(__name__)
 app.config.from_object(Config)
