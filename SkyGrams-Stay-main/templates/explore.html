@@ -605,69 +605,6 @@
         </div>
         <button class="next">&#10095;</button>
     </div>
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup()">&times;</span>
-            <h2>Guest Information</h2>
-            <form id="infoForm" action="{{ url_for('submit') }}" method="post">
-                <input type="text" id="name" name="name" placeholder="Name" required>
-                <input type="email" id="email" name="email" placeholder="Email" required>
-                <input type="tel" id="mobile" name="mobile" placeholder="Mobile" required>
-                <input type="text" id="place" name="place" placeholder="Place to Visit" required>
-                <div class="inline">
-                    <div>
-                        <label for="checkin">Check-in Date</label>
-                        <input type="date" id="checkin" name="checkin" required>
-                    </div>
-                    <div>
-                        <label for="checkout">Check-out Date</label>
-                        <input type="date" id="checkout" name="checkout" required>
-                    </div>
-                </div>
-                <div id="guestBox" class="guest-box" onclick="openGuestForm()">Guests: 02 adults & 00 children & 00 infants</div>
-                <button type="submit">Submit</button>
-                <!-- Hidden inputs for guest data -->
-                <input type="hidden" id="guest_adults" name="guest_adults" value="02">
-                <input type="hidden" id="guest_children" name="guest_children" value="00">
-                <input type="hidden" id="guest_infants" name="guest_infants" value="00">
-            </form>
-        </div>
-    </div>
-    
-    <div id="guestPopup" class="popup">
-        <div class="popup-content guest-popup-content" style="width: 400px;">
-            <span class="close" onclick="closeGuestForm()">&times;</span>
-            <h2>Guests Information</h2>
-            <div class="guest-item">
-                <label for="adults">Adults<br><span style="font-size: 12px;">Age 13 years and more</span></label>
-                <div>
-                    <button type="button" onclick="changeGuestCount('adults', -1)">-</button>
-                    <input type="text" id="adults" name="adults" value="02" readonly>
-                    <button type="button" onclick="changeGuestCount('adults', 1)">+</button>
-                </div>
-            </div>
-            <div class="guest-item">
-                <label for="children">Children<br><span style="font-size: 12px;">Age 3-12 years</span></label>
-                <div>
-                    <button type="button" onclick="changeGuestCount('children', -1)">-</button>
-                    <input type="text" id="children" name="children" value="00" readonly>
-                    <button type="button" onclick="changeGuestCount('children', 1)">+</button>
-                </div>
-            </div>
-            <div class="guest-item">
-                <label for="infants">Infants<br><span style="font-size: 12px;">Age 0-2 years</span></label>
-                <div>
-                    <button type="button" onclick="changeGuestCount('infants', -1)">-</button>
-                    <input type="text" id="infants" name="infants" value="00" readonly>
-                    <button type="button" onclick="changeGuestCount('infants', 1)">+</button>
-                </div>
-            </div>
-            <div class="guest-actions">
-                <button type="button" class="clear" onclick="clearGuestInfo()">Clear</button>
-                <button type="button" class="apply" onclick="applyGuestInfo()">Apply</button>
-            </div>
-        </div>
-    </div>
 
     <div class="destination-section">
         <h2  font-family: 'Baskerville', serif;>Explore Destinations</h2>
