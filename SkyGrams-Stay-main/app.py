@@ -31,7 +31,7 @@ app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
 app.config['MAIL_USE_SSL'] = os.getenv('MAIL_USE_SSL') == 'True'
 
 mail = Mail(app)
-
+db.init_app(app)
 #Creating Data Base
 def init_db():
     with app.app_context():
@@ -783,7 +783,6 @@ def charge():
         <b>Location:</b> {location}<br>
         <b>Check-in Date:</b> {check_in_date}<br>
         <b>Check-out Date:</b> {check_out_date}<br>
-        <b>Number of Guests:</b> {guest_count}<br>
         <b>Total Amount:</b> INR {total_amount}</p>
 
 
