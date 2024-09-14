@@ -1,13 +1,136 @@
-<!-- templates/delete_property.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Property</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f6f7;
+            font-family: 'Arial', sans-serif;
+            padding: 30px;
+            font-size: 16px;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            font-size: 15px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-back {
+            background-color: #4CAF50;
+            color: white;
+            margin-left: 15px;
+        }
+
+        .btn-back:hover {
+            background-color: #388E3C;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .flashes {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .flashes li {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            color: white;
+        }
+
+        .flashes li.success {
+            background-color: #4CAF50;
+        }
+
+        .flashes li.error {
+            background-color: #f44336;
+        }
+
+        @media (max-width: 768px) {
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn-back {
+                margin-left: 0;
+                margin-top: 15px;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .form-control {
+                padding: 8px;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <h1>Delete Property</h1>
+
     <form action="{{ url_for('delete_property') }}" method="POST">
         <div class="form-group">
             <label for="property_id">Select Property to Delete:</label>
@@ -17,9 +140,13 @@
                 {% endfor %}
             </select>
         </div>
-        <button type="submit" class="btn btn-danger">Delete</button>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-back">Back to Dashboard</a>
+        </div>
     </form>
-    <a href="{{ url_for('home') }}">Back to Home</a>
+
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <ul class="flashes">
@@ -29,5 +156,6 @@
             </ul>
         {% endif %}
     {% endwith %}
+
 </body>
 </html>
