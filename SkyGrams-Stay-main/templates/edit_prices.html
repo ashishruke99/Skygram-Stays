@@ -9,6 +9,73 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
     
+    <style>
+        body {
+            background-color: #f0f4f3;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group label {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .form-control {
+            border: 1px solid #4CAF50;
+            background-color: #f7f9f8;
+            border-radius: 5px;
+        }
+
+        #calendar {
+            margin-top: 20px;
+            border: 1px solid #4CAF50;
+            background-color: #f7f9f8;
+            border-radius: 5px;
+        }
+
+        /* Button Styles */
+        .admin-dashboard-btn {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .admin-dashboard-btn a {
+            color: white;
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .admin-dashboard-btn a:hover {
+            background-color: #388E3C; /* Darker green on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
@@ -23,6 +90,11 @@
             </select>
         </div>
         <div id="calendar"></div>
+
+        <!-- Back to Admin Dashboard Button -->
+        <div class="admin-dashboard-btn">
+            <a href="{{ url_for('admin_dashboard') }}">Back to Admin Dashboard</a>
+        </div>
     </div>
 
     <script>
@@ -37,25 +109,20 @@
             });
 
             function loadCalendarEvents(propertyId) {
-                $('#calendar').fullCalendar('destroy'); // Destroy the existing calendar
+                $('#calendar').fullCalendar('destroy');
                 $('#calendar').fullCalendar({
                     editable: true,
                     events: function(start, end, timezone, callback) {
                         $.ajax({
                             url: '/get_prices',
-                            data: {
-                                property_id: propertyId
-                            },
+                            data: { property_id: propertyId },
                             success: function(data) {
                                 var events = [];
-                                var basePrice = data.base_price;
                                 $.each(data.daily_prices, function(date, price) {
                                     events.push({
                                         title: '₹' + price,
                                         start: date,
-                                        allDay: true,
-                                        price: price,
-                                        property_id: propertyId
+                                        allDay: true
                                     });
                                 });
                                 callback(events);
@@ -79,11 +146,7 @@
                     url: '/update_price',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({
-                        property_id: propertyId,
-                        date: date,
-                        new_price: price
-                    }),
+                    data: JSON.stringify({ property_id: propertyId, date: date, new_price: price }),
                     success: function(response) {
                         if (response.status === "success") {
                             $('#calendar').fullCalendar('refetchEvents');
