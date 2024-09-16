@@ -374,7 +374,7 @@ def submitP():
     if request.method == 'POST':
         try:
             amenities = [
-    ('TV', request.form.get('amenities_tv')),
+    ('tv', request.form.get('amenities_tv')),
     ('toiletries', request.form.get('amenities_toiletries')),
     ('wardrobe', request.form.get('amenities_wardrobe')),
     ('ac', request.form.get('amenities_ac')),
