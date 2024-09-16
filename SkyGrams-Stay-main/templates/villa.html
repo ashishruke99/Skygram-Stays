@@ -13,9 +13,6 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <style>
-        #amenities-list li {
-    display: block;
-}
         body {
             color: #333;
             line-height: 1.6;
@@ -1311,28 +1308,15 @@ onmouseout="this.style.backgroundColor='#28a745'; this.style.color='#fff';">
 </div>
 <script>
     function showAmenities(status) {
-        // Get all the amenity items
-        var items = document.querySelectorAll('#amenities-list li');
-        
-        // Show or hide items based on status
-        items.forEach(function(item) {
-            item.style.display = item.getAttribute('data-status') === status ? '' : 'none';
-        });
-        
-        // Get all the buttons
-        var buttons = document.querySelectorAll('.amenities-tabs button');
-        
-        // Remove 'active' class from all buttons
-        buttons.forEach(function(button) {
-            button.classList.remove('active');
-        });
-        
-        // Add 'active' class to the button with matching data-status
-        var activeButton = Array.from(buttons).find(button => button.getAttribute('data-status') === status);
-        if (activeButton) {
-            activeButton.classList.add('active');
+    var items = document.querySelectorAll('#amenities-list li');
+    items.forEach(function(item) {
+        if (item.getAttribute('data-status') === status) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
         }
-    }
+    });
+}
     
 
     document.addEventListener('DOMContentLoaded', function() {
