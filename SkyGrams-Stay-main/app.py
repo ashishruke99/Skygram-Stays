@@ -408,6 +408,19 @@ def submitP():
     ('wheelchair-friendly', request.form.get('amenities_wheelchair-friendly')),
     ('wifi', request.form.get('amenities_wifi')),
     ('workstation', request.form.get('amenities_workstation')),
+    ('chef', request.form.get('amenities_chef')),
+    ('first-aid', request.form.get('amenities_first-aid')),
+    ('fresh-linens', request.form.get('amenities_fresh-linens')),
+    ('genset-backup', request.form.get('amenities_genset-backup')),
+    ('inverter-backup', request.form.get('amenities_inverter-backup')),
+    ('ironing-board', request.form.get('amenities_ironing-board')),
+    ('karaoke', request.form.get('amenities_karaoke')),
+    ('kitchen-access', request.form.get('amenities_kitchen-access')),
+    ('lift', request.form.get('amenities_lift')),
+    ('lockers', request.form.get('amenities_lockers')),
+    ('mobile-network', request.form.get('amenities_mobile-network')),
+    ('mobile', request.form.get('amenities_mobile')),
+    ('volleyball', request.form.get('amenities_volleyball'))
 ]
 
             property_name = request.form['property_name']
