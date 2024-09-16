@@ -991,9 +991,13 @@
                                 <select name="location" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
                                     <option value="ALL">All Locations</option>
                                     <option value="Pune" {% if request.args.get('location') == 'Pune' %}selected{% endif %}>Pune</option>
-                                    <option value="Mumbai" {% if request.args.get('location') == 'Mumbai' %}selected{% endif %}>Mumbai</option>
-                                    <option value="Goa" {% if request.args.get('location') == 'Goa' %}selected{% endif %}>Goa</option>
-                                    <option value="Rajgad" {% if request.args.get('location') == 'Rajgad' %}selected{% endif %}>Rajgad</option>
+                                    <option value="Mumbai" {% if request.args.get('location') == 'Lonavala' %}selected{% endif %}>Lonavala</option>
+                                    <option value="Goa" {% if request.args.get('location') == 'Mahabaleshwar' %}selected{% endif %}>Mahabaleshwar</option>
+                                    <option value="Rajgad" {% if request.args.get('location') == 'Alibaug' %}selected{% endif %}>Alibaug</option>
+                                    <option value="Goa" {% if request.args.get('location') == 'Mulshi' %}selected{% endif %}>Mulshi</option>
+                                    <option value="Rajgad" {% if request.args.get('location') == 'Purandar' %}selected{% endif %}>Purandar</option>
+                                    <option value="Goa" {% if request.args.get('location') == 'Karjat' %}selected{% endif %}>Karjat</option>
+                                    <option value="Rajgad" {% if request.args.get('location') == 'Shirur' %}selected{% endif %}>Shirur</option>
                                     <!-- Add more locations as needed -->
                                 </select>
                             </div>
