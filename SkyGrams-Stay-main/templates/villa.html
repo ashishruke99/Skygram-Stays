@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{ property.property_name }}</title>
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
@@ -1133,16 +1132,21 @@
                         <ul id="amenities-list" class="amenities-list">
                             {% for amenity in property.amenities %}
                                 {% if amenity.status == 'available' %}
-                                    <li data-status="available"><img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}"></li>
+                                    <li data-status="available">
+                                        <img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}
+                                    </li>
                                 {% elif amenity.status == 'paid' %}
-                                    <li data-status="paid" style="display:none;"><img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}"></li>
+                                    <li data-status="paid" style="display:none;">
+                                        <img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}
+                                    </li>
                                 {% elif amenity.status == 'not_available' %}
-                                    <li data-status="not_available" style="display:none;"><img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}"></li>
+                                    <li data-status="not_available" style="display:none;">
+                                        <img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}
+                                    </li>
                                 {% endif %}
                             {% endfor %}
                         </ul>
                     </div>
-                </div>
                 
                                 
                 <div id="meals" class="tab-content">
