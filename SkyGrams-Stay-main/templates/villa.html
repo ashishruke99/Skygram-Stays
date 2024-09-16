@@ -1133,15 +1133,15 @@
                             {% for amenity in property.amenities %}
                                 {% if amenity.status == 'available' %}
                                     <li data-status="available">
-                                        <img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}
+                                        <img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}" onerror="this.onerror=null; this.src='{{ url_for('static', filename='icon/default.png') }}';"> {{ amenity.name }}
                                     </li>
                                 {% elif amenity.status == 'paid' %}
                                     <li data-status="paid" style="display:none;">
-                                        <img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}
+                                        <img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}" onerror="this.onerror=null; this.src='{{ url_for('static', filename='icon/default.png') }}';"> {{ amenity.name }}
                                     </li>
                                 {% elif amenity.status == 'not_available' %}
                                     <li data-status="not_available" style="display:none;">
-                                        <img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}"> {{ amenity.name }}
+                                        <img src="{{ url_for('static', filename='icon/' ~ amenity.icon) }}" alt="{{ amenity.name }}" onerror="this.onerror=null; this.src='{{ url_for('static', filename='icon/default.png') }}';"> {{ amenity.name }}
                                     </li>
                                 {% endif %}
                             {% endfor %}
