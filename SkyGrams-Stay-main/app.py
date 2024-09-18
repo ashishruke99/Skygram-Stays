@@ -13,6 +13,7 @@ import psycopg2
 from flask_mail import Mail, Message
 from sqlalchemy import or_
 from dotenv import load_dotenv
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 app.config.from_object(Config)
