@@ -193,6 +193,15 @@
             transform: translateY(-100%);
             transition: all 0.2s ease-in-out;
         }
+        .form-label {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .form-group:hover .form-label {
+            opacity: 1;
+        }
+                
         label {
             position: absolute;
             top: 0;
