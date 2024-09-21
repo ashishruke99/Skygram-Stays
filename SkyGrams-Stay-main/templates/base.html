@@ -308,6 +308,50 @@
             color: black;
         }
 
+        .whatsapp-float {
+            position: fixed;
+            width: 65px;
+            height: 65px;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            text-decoration: none;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: heartbeat 2s infinite;
+        }
+        
+        .whatsapp-float i {
+            font-size: 42px;
+            color: #25D366;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+            animation-play-state: paused;
+        }
+        
+        .whatsapp-float:focus,
+        .whatsapp-float:hover {
+            outline: none;
+            text-decoration: none;
+        }   
+        
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
         @media (max-width: 768px) {
             .footer-section ul {
                 display: none;
@@ -317,6 +361,33 @@
                 display: block;
             }
         }
+
+        /* Mobile responsive styles for whatsapp icon */
+@media (max-width: 768px) {
+    .whatsapp-float {
+        width: 55px;
+        height: 55px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .whatsapp-float i {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .whatsapp-float i {
+        font-size: 32px;
+    }
+}
 
         /* Responsive Styles */
         @media (max-width: 768px) {
@@ -394,15 +465,19 @@
         <img src="{{ url_for('static', filename='img/preloader.gif') }}" alt="Loading...">
     </div>
 
+    <a href="https://wa.me/9226784221?text=Hey%20there,%20Please%20assist%20me%20to%20book%20a%20luxurious%20stay%20with%20Skygram%20Stays" class="whatsapp-float" target="_blank">
+        <i class="bi bi-whatsapp"></i>
+    </a>        
+
     <div class="header-top">
         <div class="container header-top__container">
             <div class="header-top__contact-info">
                 <a href="mailto:info@skygramstays.in">
                     <i class="bi bi-envelope"></i> <span>info@skygramstays.in</span>
                 </a>
-                <a href="https://maps.app.goo.gl/HyNWN7kh82QA3Ljy9">
-                    <i class="bi bi-geo-alt"></i> <span>Mukund Nagar, Pune</span>
-                </a>
+                <a href="tel:+919226784221">
+                    <i class="bi bi-telephone"></i> <span>Call Us</span>
+                </a>                
             </div>
             <div class="header-top__login-button-container">
                 {% if 'user_id' in session %}
@@ -423,7 +498,7 @@
 
     <header class="navbar navbar-expand-lg navbar-dark navbar-sticky">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('home') }}">
+            <a class="navbar-brand" href="{{ url_for('explore') }}">
                 <img src="{{ url_for('static', filename='img/logo-w.png') }}" alt="Logo">
                 <img src="{{ url_for('static', filename='img/main-w.png') }}" alt="Company Name" >
             </a>
@@ -434,7 +509,7 @@
                 <ul class="navbar-nav ml-auto">
                     <li><a href="{{ url_for('explore') }}">Explore</a></li>
                     <li><a href="{{ url_for('Customer_properties') }}">Our Properties</a></li>
-                    <li><a href="{{ url_for('list_your_property') }}">List Your Property</a></li>
+                    <li><a href="{{ url_for('list_your_property') }}">Partner with Us</a></li>
                     <li><a href="{{ url_for('about_us') }}">About Us</a></li>
                     <li><a href="{{ url_for('contact_us') }}">Contact Us</a></li>
                 </ul>
@@ -454,7 +529,7 @@
                     <ul>
                         <li><a href="{{ url_for('explore') }}">Explore</a></li>
                         <li><a href="{{ url_for('Customer_properties') }}">Our Properties</a></li>
-                        <li><a href="{{ url_for('list_your_property') }}">List Your Property</a></li>
+                        <li><a href="{{ url_for('list_your_property') }}">Partner With Us</a></li>
                         <li><a href="{{ url_for('about_us') }}">About Us</a></li>
                         <li><a href="{{ url_for('contact_us') }}">Contact Us</a></li>
                     </ul>
@@ -462,13 +537,13 @@
                 <div class="footer-section__contact-info">
                     <h3>Contact Us</h3>
                     <ul><div class="footer-item">
-                        <i class="bi bi-phone"></i>
+                        <i class="bi bi-phone"  style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
                         <div class="contact-info">
                             <p><a href="tel:+919226784221">+91 9226784221</a><br><span>Phone Number</span></p>
                         </div>
                     </div>
                     <div class="footer-item">
-                        <i class="bi bi-envelope"></i>
+                        <i class="bi bi-envelope"  style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
                         <div class="contact-info">
                             <p><a href="mailto:info@skygramstays.in">info@skygramstays.in</a><br><span>Business Email</span></p>
                         </div>
@@ -476,24 +551,21 @@
                 </div></ul>
                 <div class="footer-section__social">
                     <h3>Follow Us</h3>
-                    <ul><div class="footer-item">
-                        <i class="bi bi-facebook"></i>
-                        <div class="contact-info">
-                            <p><a href="https://www.facebook.com/people/SkyGram-Stays/pfbid049m5DT24XV3kJpYKYh3nZT54vYGc39finw9QBgoRYM16B8H93is6HfH9284e5Qyel/" target="_blank">SkyGram Stays</a><br><span>Facebook</span></p>
+                    <ul>
+                        <div class="footer-item">
+                            <div class="contact-info">
+                                <a href="https://www.facebook.com/people/SkyGram-Stays/pfbid049m5DT24XV3kJpYKYh3nZT54vYGc39finw9QBgoRYM16B8H93is6HfH9284e5Qyel/" target="_blank" style="text-decoration: none; margin-right: 15px;">
+                                    <i class="bi bi-facebook" style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
+                                </a>
+                                <a href="https://www.instagram.com/skygram_stays/" target="_blank" style="text-decoration: none; margin-right: 15px;">
+                                    <i class="bi bi-instagram" style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
+                                </a>                                
+                                <a href="https://api.whatsapp.com/send/?phone=%2B919226784221&text&type=phone_number&app_absent=0" target="_blank" style="text-decoration: none;">
+                                    <i class="bi bi-whatsapp" style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="footer-item">
-                        <i class="bi bi-instagram"></i>
-                        <div class="contact-info">
-                            <p><a href="https://www.instagram.com/skygram_stays/" target="_blank">skygram_stays</a><br><span>Instagram</span></p>
-                        </div>
-                    </div>
-                    <div class="footer-item">
-                        <i class="bi bi-whatsapp"></i>
-                        <div class="contact-info">
-                            <p><a href="https://api.whatsapp.com/send/?phone=%2B919226784221&text&type=phone_number&app_absent=0" target="_blank">+91 9226784221</a><br><span>WhatsApp</span></p>
-                        </div>
-                    </div></ul>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
