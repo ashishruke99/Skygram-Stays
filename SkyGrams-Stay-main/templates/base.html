@@ -6,7 +6,6 @@
     <title>SkyGram Stays</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -525,6 +524,45 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section__quick-links">
+                <div class="footer-section__company" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="width: 100; height: auto; max-width: 300px;">
+                </div>
+                    <ul>
+                        <div class="footer-item">
+                            <div class="contact-info">
+                                <a href="https://www.facebook.com/people/SkyGram-Stays/pfbid049m5DT24XV3kJpYKYh3nZT54vYGc39finw9QBgoRYM16B8H93is6HfH9284e5Qyel/" target="_blank" style="text-decoration: none; margin-right: 15px;margin-left: 15px;">
+                                    <i class="bi bi-facebook" style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
+                                </a>
+                                <a href="https://www.instagram.com/skygram_stays/" target="_blank" style="text-decoration: none; margin-right: 15px;">
+                                    <i class="bi bi-instagram" style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
+                                </a>                                
+                                <a href="https://api.whatsapp.com/send/?phone=%2B919226784221&text&type=phone_number&app_absent=0" target="_blank" style="text-decoration: none;">
+                                    <i class="bi bi-whatsapp" style="color: #000; transition: transform 0.3s ease, color 0.3s ease; margin-right: 20px;"></i>
+                                </a>
+                                <a href="mailto:info@skygramstays.in" target="_blank" style="text-decoration: none;">
+                                    <i class="bi bi-envelope" style="color: #000; transition: transform 0.3s ease, color 0.3s ease; margin-right: 20px;"></i>
+                                </a>
+                                <a href="tel:+919226784221" target="_blank" style="text-decoration: none;">
+                                    <i class="bi bi-telephone" style="color: #000; transition: transform 0.3s ease, color 0.3s ease; margin-right: 15px;"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </ul>
+            </div>              
+                <div class="footer-section__quick-links">
+                    <h3>Explore Villas</h3>
+                    <ul>
+                        <li><a href="{{ url_for('Customer_properties', location='Pune') }}" class="destination-link">Villas in Pune</a></li>
+                        <li><a href="{{ url_for('Customer_properties', location='Pune') }}" class="destination-link">Villas in Mahabaleshwar</a></li>
+                        <li><a href="{{ url_for('Customer_properties', location='Pune') }}" class="destination-link">Villas in Karjat</a></li>
+                        <li><a href="{{ url_for('Customer_properties', location='Pune') }}" class="destination-link">Villas in Shirur</a></li>
+                        <li><a href="{{ url_for('Customer_properties', location='Pune') }}" class="destination-link">Villas in Lonavala</a></li>
+                        <li><a href="{{ url_for('Customer_properties', location='Pune') }}" class="destination-link">Villas in Alibaug</a></li>
+                        <li><a href="{{ url_for('Customer_properties', location='Pune') }}" class="destination-link">Villas in Mulshi</a></li>
+                        <li><a href="{{ url_for('Customer_properties', location='Pune') }}" class="destination-link">Villas in Purandar</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section__contact-info">
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="{{ url_for('explore') }}">Explore</a></li>
@@ -532,48 +570,16 @@
                         <li><a href="{{ url_for('list_your_property') }}">Partner With Us</a></li>
                         <li><a href="{{ url_for('about_us') }}">About Us</a></li>
                         <li><a href="{{ url_for('contact_us') }}">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section__contact-info">
-                    <h3>Contact Us</h3>
-                    <ul><div class="footer-item">
-                        <i class="bi bi-phone"  style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
-                        <div class="contact-info">
-                            <p><a href="tel:+919226784221">+91 9226784221</a><br><span>Phone Number</span></p>
-                        </div>
-                    </div>
-                    <div class="footer-item">
-                        <i class="bi bi-envelope"  style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
-                        <div class="contact-info">
-                            <p><a href="mailto:info@skygramstays.in">info@skygramstays.in</a><br><span>Business Email</span></p>
-                        </div>
-                    </div>
-                </div></ul>
-                <div class="footer-section__social">
-                    <h3>Follow Us</h3>
-                    <ul>
-                        <div class="footer-item">
-                            <div class="contact-info">
-                                <a href="https://www.facebook.com/people/SkyGram-Stays/pfbid049m5DT24XV3kJpYKYh3nZT54vYGc39finw9QBgoRYM16B8H93is6HfH9284e5Qyel/" target="_blank" style="text-decoration: none; margin-right: 15px;">
-                                    <i class="bi bi-facebook" style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
-                                </a>
-                                <a href="https://www.instagram.com/skygram_stays/" target="_blank" style="text-decoration: none; margin-right: 15px;">
-                                    <i class="bi bi-instagram" style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
-                                </a>                                
-                                <a href="https://api.whatsapp.com/send/?phone=%2B919226784221&text&type=phone_number&app_absent=0" target="_blank" style="text-decoration: none;">
-                                    <i class="bi bi-whatsapp" style="color: #000; transition: transform 0.3s ease, color 0.3s ease;"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </ul>
+                    </ul>                    
                 </div>
             </div>
+
             <div class="footer-bottom">
                 <p class="text-left">&copy;<script>document.write(new Date().getFullYear());</script> SkyGram Stays. All rights reserved.</p>
                 <p class="text-right"><a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms & Conditions</a></p>
             </div>
         </div>
-    </footer>    
+    </footer>        
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
