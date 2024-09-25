@@ -448,6 +448,16 @@
                 text-align: left;
                 margin-bottom: 10px;
             }
+            .call-float {
+                width: 55px;
+                height: 55px;
+                bottom: 90px;
+                right: 15px;
+            }
+        
+            .call-float i {
+                font-size: 34px;
+            }
         }
 
         .user-icon {
@@ -457,12 +467,59 @@
         .user-dropdown.show {
             display: block;
         }
+
+        .call-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 110px;
+            right: 20px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            text-decoration: none;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .call-float i {
+            font-size: 38px;
+            color: #007bff;
+        }
+        
+        .call-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .call-float:focus,
+        .call-float:hover {
+            outline: none;
+            text-decoration: none;
+        }
+        .call-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 9px;
+            height: 9px;
+            background-color: red;
+            border-radius: 50%;
+            z-index: 10000;
+        }
     </style>
 </head>
 <body>
     <div id="preloader">
         <img src="{{ url_for('static', filename='img/preloader.gif') }}" alt="Loading...">
     </div>
+
+    <a href="tel:+9226784221" class="call-float" target="_blank">
+        <i class="bi bi-telephone"></i><span class="call-dot"></span>
+    </a>
 
     <a href="https://wa.me/9226784221?text=Hey%20there,%20Please%20assist%20me%20to%20book%20a%20luxurious%20stay%20with%20Skygram%20Stays" class="whatsapp-float" target="_blank">
         <i class="bi bi-whatsapp"></i>
@@ -471,11 +528,8 @@
     <div class="header-top">
         <div class="container header-top__container">
             <div class="header-top__contact-info">
-                <a href="mailto:info@skygramstays.in">
-                    <i class="bi bi-envelope"></i> <span>info@skygramstays.in</span>
-                </a>
                 <a href="tel:+919226784221">
-                    <i class="bi bi-telephone"></i> <span>Call Us</span>
+                    <i class="bi bi-telephone"></i> <span>Call Us at </span><span>+91 9226784221</span>
                 </a>                
             </div>
             <div class="header-top__login-button-container">
