@@ -5,7 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkyGram Stays</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/animate/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
     <style>
         body {
             background-color: #fff;
@@ -101,68 +110,104 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
+            z-index: 10000;
         }
+        
         .popup-content {
             background-color: white;
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 8px;
             width: 90%;
             max-width: 400px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             text-align: center;
             position: relative;
+            z-index: 10001;
         }
-        .popup-content input, .popup-content button {
+        
+        .popup-content input,
+        .popup-content button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             box-sizing: border-box;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 16px;
         }
+        
+        .popup-content button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .popup-content button:hover {
+            background-color: #0056b3;
+        }
+        
         .inline {
             display: flex;
             justify-content: space-between;
             width: 100%;
         }
-        .inline div {
-            width: 48%;
-        }
+        
         .inline label {
             display: block;
             width: 100%;
             text-align: left;
             font-size: 14px;
+            color: #333;
         }
+        
         .inline input {
             width: 100%;
+            border-radius: 4px;
+            border: 1px solid #ddd;
         }
+        
         .close {
             position: absolute;
             top: 10px;
             right: 10px;
-            font-size: 20px;
+            font-size: 24px;
+            color: #333;
             cursor: pointer;
+            transition: color 0.3s ease;
         }
+        
+        .close:hover {
+            color: #ff4d4d;
+        }
+        
         .guest-box {
             border: 1px solid #ccc;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             cursor: pointer;
             text-align: left;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
         }
+        
         .guest-box:hover {
-            background-color: #f0f0f0;
+            background-color: #f9f9f9;
         }
+        
         .guest-popup-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
         }
+        
         .guest-item {
             display: flex;
             justify-content: space-between;
@@ -170,52 +215,80 @@
             width: 100%;
             margin-bottom: 15px;
         }
+        
         .guest-item label {
             flex-grow: 1;
             text-align: left;
+            font-size: 16px;
         }
+        
         .guest-item div {
             display: flex;
             align-items: center;
         }
+        
         .guest-item div button {
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             border: 1px solid #ccc;
-            background: none;
-            font-size: 18px;
+            background: #fff;
+            color: #333;
+            font-size: 20px;
             cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+        
+        .guest-item div button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        
         .guest-item div input {
-            width: 50px;
+            width: 60px;
             text-align: center;
-            border: none;
+            border: 1px solid #ddd;
             background: none;
             font-size: 18px;
             font-weight: bold;
+            border-radius: 4px;
         }
+        
         .guest-actions {
             display: flex;
             justify-content: space-between;
             width: 100%;
         }
+        
         .guest-actions button {
-            padding: 10px 20px;
+            padding: 12px 20px;
             margin-top: 20px;
             cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
         }
+        
         .guest-actions button.apply {
-            background-color: black;
+            background-color: #007bff;
             color: white;
+            border: none;
         }
+        
+        .guest-actions button.apply:hover {
+            background-color: #0056b3;
+        }
+        
         .guest-actions button.clear {
             background-color: white;
-            color: black;
-            border: 1px solid black;
+            color: #333;
+            border: 1px solid #007bff;
         }
+        
+        .guest-actions button.clear:hover {
+            background-color: #f1f1f1;
+        }
+
         .login-button-container {
             position: relative;
             display: inline-block;
@@ -260,8 +333,7 @@
         .destination-section h2 {
             color: #333;
             margin-bottom: 20px;
-            font-family: 'Baskerville', serif;
-            font-weight: 500;
+            font-weight: 400;
         }
 
         .destinations {
@@ -309,8 +381,7 @@
         .best-rated-section h2 {
             color: #333;
             margin-bottom: 20px;
-            font-family: 'Baskerville', serif;
-            font-weight: 500;
+            font-weight: 400;
         }
 
         .best-rated-slider {
@@ -414,14 +485,14 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             border-radius: 10px;
             margin: 20px 0;
         }
 
         .list-property-bar .text {
             font-size: 1.2em;
-            font-weight: bold;
+            font-weight: 400;
         }
 
         .list-property-bar .subtext {
@@ -483,13 +554,6 @@
                 padding: 30px 10px;
             }
         
-            .destinations-row {
-                display: flex;
-                gap: 10px;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                padding-bottom: 15px;
-            }
         
             .destination {
                 flex: 0 0 25%; 
@@ -578,6 +642,114 @@
                 width: 100%;
                 text-align: center;
             }
+
+            /* Guest Info Popup Styling */
+            .popup-content {
+                width: 95%;
+                padding: 20px;
+                max-width: 350px;
+                max-height: 80vh;
+                overflow-y: auto;
+                margin-top: 20px;
+                background-color: #f9f9f9;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+        
+            .popup-content h2 {
+                font-size: 18px;
+                margin-bottom: 20px;
+                color: #333;
+            }
+        
+            .popup-content input,
+            .popup-content button {
+                font-size: 14px;
+                padding: 10px;
+                margin-bottom: 15px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                box-sizing: border-box;
+            }
+        
+            .popup-content button {
+                background-color: #007bff;
+                color: #fff;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+        
+            .popup-content button:hover {
+                background-color: #0056b3;
+            }
+        
+            .inline {
+                flex-direction: column;
+            }
+        
+            .inline label {
+                margin-bottom: 5px;
+            }
+        
+            .inline input {
+                margin-bottom: 15px;
+            }
+        
+            .guest-box {
+                padding: 10px;
+                margin: 15px 0;
+                background-color: #f1f1f1;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+            }
+        
+            .guest-item {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 15px;
+            }
+        
+            .guest-item div {
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+            }
+        
+            .guest-item div button {
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+                margin: 0 5px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+        
+            .guest-item div button:hover {
+                background-color: #0056b3;
+            }
+        
+            .guest-item div input {
+                width: 40px;
+                text-align: center;
+                font-size: 16px;
+                border: none;
+                background-color: #f9f9f9;
+            }
+        
+            .guest-actions {
+                flex-direction: column;
+            }
+        
+            .guest-actions button {
+                width: 100%;
+                margin-top: 10px;
+                padding: 10px;
+            }
         }        
         
         
@@ -587,6 +759,69 @@
     {% extends 'base.html' %}
 
     {% block content %}
+    <div class="fcontainer">
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close" onclick="closePopup()">&times;</span>
+                <h2>Guest Information</h2>
+                <form id="infoForm" action="{{ url_for('submit') }}" method="post">
+                    <input type="text" id="name" name="name" placeholder="Name" required>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <input type="tel" id="mobile" name="mobile" placeholder="Mobile" required>
+                    <input type="text" id="place" name="place" placeholder="Place to Visit" required>
+                    <div class="inline">
+                        <div>
+                            <label for="checkin">Check-in Date</label>
+                            <input type="date" id="checkin" name="checkin" required>
+                        </div>
+                        <div>
+                            <label for="checkout">Check-out Date</label>
+                            <input type="date" id="checkout" name="checkout" required>
+                        </div>
+                    </div>
+                    <div id="guestBox" class="guest-box" onclick="openGuestForm()">Guests: 02 adults & 00 children</div>
+                    <button type="submit">Submit</button>
+                    <input type="hidden" id="guest_adults" name="guest_adults" value="02">
+                    <input type="hidden" id="guest_children" name="guest_children" value="00">
+                    <input type="hidden" id="guest_infants" name="guest_infants" value="00">
+                </form>
+            </div>
+        </div>
+        
+        <div id="guestPopup" class="popup">
+            <div class="popup-content guest-popup-content">
+                <span class="close" onclick="closeGuestForm()">&times;</span>
+                <h2>Guests Information</h2>
+                <div class="guest-item">
+                    <label for="adults">Adults<br><span style="font-size: 12px;">Age 13 years and more</span></label>
+                    <div>
+                        <button type="button" onclick="changeGuestCount('adults', -1)">-</button>
+                        <input type="text" id="adults" name="adults" value="02" readonly>
+                        <button type="button" onclick="changeGuestCount('adults', 1)">+</button>
+                    </div>
+                </div>
+                <div class="guest-item">
+                    <label for="children">Children<br><span style="font-size: 12px;">Age 3-12 years</span></label>
+                    <div>
+                        <button type="button" onclick="changeGuestCount('children', -1)">-</button>
+                        <input type="text" id="children" name="children" value="00" readonly>
+                        <button type="button" onclick="changeGuestCount('children', 1)">+</button>
+                    </div>
+                </div>
+                <div class="guest-item">
+                    <label for="infants">Infants<br><span style="font-size: 12px;">Age 0-2 years</span></label>
+                    <div>
+                        <button type="button" onclick="changeGuestCount('infants', -1)">-</button>
+                        <input type="text" id="infants" name="infants" value="00" readonly>
+                        <button type="button" onclick="changeGuestCount('infants', 1)">+</button>
+                    </div>
+                </div>
+                <div class="guest-actions">
+                    <button type="button" class="clear" onclick="clearGuestInfo()">Clear</button>
+                    <button type="button" class="apply" onclick="applyGuestInfo()">Apply</button>
+                </div>
+            </div>
+        </div>
 
     <div class="image-slider">
         <button class="prev">&#10094;</button>
@@ -608,7 +843,7 @@
     </div>
 
     <div class="destination-section">
-        <h2  font-family: 'Baskerville', serif;>Explore Destinations</h2>
+        <h2>Explore Destinations</h2>
         <div class="destinations">
             <a href="{{ url_for('Customer_properties') }}" class="destination-link">
                 <div class="destination">
@@ -657,14 +892,14 @@
                     <img src="{{ url_for('static', filename='img/Shirur.png') }}" alt="Shirur">
                     <p>Shirur</p>
                 </div>
-            </a>
+            </a><br>
             <div class="destination">
                 <a href="{{ url_for('Customer_properties') }}" class="view-all-button">View all destinations</a>
             </div>
         </div>
     </div>
     <div class="best-rated-section">
-        <h2 class="text-center"  font-family: 'Baskerville', serif;>Best Rated Villas</h2>
+        <h2 class="text-center">Best Rated Villas</h2>
         <div class="best-rated-slider">
             <div class="best-rated-slides">
                 <div class="best-rated-slide">
@@ -684,7 +919,7 @@
                         <a href="{{ url_for('Customer_properties') }}">
                             <img src="{{ url_for('static', filename='img/berry.jpg') }}" alt="Best Rated 2">
                         </a>
-                        <h3>Berry Castle</h3>
+                        <h3>Skygram Berry Castle</h3>
                         <p><i class="fas fa-map-marker-alt"></i> Panchgani, Bhilare</p>
                         <p>Upto 24 Guests • 6 Rooms • 6 Baths</p>
                         <hr class="card-divider">
