@@ -6,6 +6,11 @@
     <title>All Properties</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Baskerville:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+        if (window.location.pathname === "/Customer_properties") {
+            window.history.replaceState(null, null, "/all_properties");
+        }
+    </script>
     <style>
         body {
             background-color: #fafafa;
